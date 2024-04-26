@@ -4,7 +4,7 @@ import dts from "vite-plugin-dts";
 // https://vitejs.dev/guide/build.html#library-mode
 
 export default defineConfig({
-  //base: "plotWriter",
+  base: "plotWritter",
   build: {
     rollupOptions: {
       output: {
