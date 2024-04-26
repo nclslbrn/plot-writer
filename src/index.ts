@@ -2,8 +2,9 @@ import { type Vec, Line, Glyph, Font } from "./type";
 import { lowercase } from "./glyphs/lowercase";
 import { uppercase } from "./glyphs/uppercase";
 import { ponctuation } from "./glyphs/poncuation";
+import { number } from './glyphs/number';
 
-const font = { ...lowercase, ...uppercase, ...ponctuation } as Font;
+const font = { ...lowercase, ...uppercase, ...ponctuation, ...number } as Font;
 
 /**
  * A function to move and scale each glyph vertex/point/Vec coordinate
