@@ -1,0 +1,230 @@
+body {
+	box-sizing: border-box;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', Arial, sans-serif;
+}
+
+body,
+#app {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background: linear-gradient(to bottom, #ffffff, #d9d6d6);
+	min-height: 100vh;
+}
+
+#app form,
+footer {
+	display: flex;
+	padding: 0 2em;
+  height: 40px;
+	flex-flow: row nowrap;
+	align-items: center;
+}
+
+#app form {
+	justify-content: space-between;
+	margin-bottom: 2em;
+	box-shadow: 0 10px 5px rgba(0 0 0 / 15%);
+}
+
+#app form h1 {
+	margin: 0.4em 0;
+}
+
+#app form input,
+footer p {
+	text-align: center;
+}
+
+#app form textarea {
+	display: block;
+  width: 100%;
+  max-height: 30px;
+  border: none;
+}
+
+@media screen and (min-width: 900px) {
+	#app form input {
+		display: block;
+		font-size: 1.4em;
+		padding: 0.4em;
+	}
+}
+
+#app .palette-grid,
+#app table {
+	width: 84%;
+	margin: 1em 8%;
+}
+
+#app .palette-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	grid-gap: 2em;
+}
+
+#app table {
+	border-collapse: collapse;
+}
+
+#app .create-palette {
+	padding: 1em;
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+	margin: 6em auto 0;
+}
+
+#app .create-palette img,
+#app .create-palette pre,
+#app .create-palette .palette-out {
+	position: relative;
+	width: 90%;
+	margin: 0 5%;
+	height: auto;
+}
+
+#app .create-palette input[type='file'] {
+	margin: 1em 0;
+	padding: 0.4em;
+	border: none;
+	background: linear-gradient(to bottom, #333, #111);
+	color: #fff;
+}
+
+#app .create-palette pre {
+	margin-top: 2em;
+	word-break: break-word;
+	white-space: break-spaces;
+	border: 1px solid #ccc;
+	background: #f2f2f2;
+	border-radius: 4px;
+}
+
+#app table thead tr th {
+	padding: 4px;
+	border-bottom: 4px solid #333;
+}
+
+#app table tbody tr td {
+	border-top: 1px solid #333;
+	padding: 0 4px;
+}
+
+#app table tbody tr td span {
+	display: inline-block;
+	margin: 0.5;
+	width: 3em;
+	height: 3em;
+	border-radius: 1.5em;
+}
+
+#app table tr .artist {
+	width: 20%;
+}
+#app table tr .work {
+	width: 35%;
+}
+
+#app table tr .stroke,
+#app table tr .background,
+#app table tr .colors {
+	width: 5%;
+	text-align: center;
+}
+
+#app table tr .colors {
+	width: 35%;
+}
+
+#app table tbody tr td h2,
+#app table tbody tr td p {
+	margin: 0.2em 0;
+}
+
+.palette-block {
+	display: flex;
+	text-align: center;
+	flex-flow: column wrap;
+	justify-content: space-between;
+	padding: 0.5em;
+	text-align: center;
+	border-radius: 2em;
+	overflow: hidden;
+	box-shadow: 0 12px 18px rgb(0 0 0 / 24%);
+}
+
+.palette-block .palette-meta {
+	padding: 0 0.5em;
+	border-bottom-left-radius: 2em;
+	border-bottom-right-radius: 2em;
+}
+
+.palette-block.bright .palette-meta {
+	background-color: #fefefe33;
+	color: #333;
+}
+
+.palette-block.dark .palette-meta {
+	background-color: #11111133;
+	color: #fefefe;
+}
+.palette-block .palette-meta label {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-between;
+	margin: 0.5em;
+}
+.palette-block .palette-meta label > span:last-child {
+	text-align: right;
+}
+
+.palette-meta h3 {
+	position: relative;
+	font-size: 1.4em;
+	margin: 0.2em 0;
+	z-index: 2;
+}
+.oalette-meta p {
+	position: relative;
+	font-size: 1em;
+	margin: 0;
+}
+
+.palette-block .colors {
+	display: flex;
+	padding: 1em 0;
+	width: 100%;
+	justify-content: space-evenly;
+	align-items: center;
+	flex-flow: row nowrap;
+}
+
+.palette-block .colors .color {
+	height: 4em;
+	flex-basis: 4em;
+	margin-left: -12.5%;
+	border-radius: 50%;
+}
+
+.palette-block .colors .color:first-child {
+	margin-left: 0;
+}
+
+footer {
+	justify-content: center;
+}
+
+footer > p {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+footer > p > * {
+	margin: 0 0.4em;
+}

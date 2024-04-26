@@ -1,0 +1,46 @@
+{
+  "name": "plotWritter",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/plotWritter.umd.cjs",
+  "module": "./dist/plotWritter.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/plotWritter.js",
+      "require": "./dist/plotWritter.umd.cjs",
+      "type": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.cjs",
+    "dist/*.d.ts"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "test": "jest",
+    "preview": "vite preview",
+    "build": "tsc --project tsconfig.build.json && vite build",
+    "deploy": "npm publish",
+    "demo:dev": "vite demo/ --host",
+    "demo:build": "tsc && vite build demo/"
+  },
+  "description": "Write (SVG) text with JavaScript",
+  "repository": "https://github.com/nclslbrn/plotWritter.git",
+  "author": "nclslbrn <nclslbrn@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.10",
+    "vite-plugin-dts": "^3.9.0"
+  },
+  "publishConfig": {
+    "@nclslbrn:registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": ">=16.2"
+  }
+}
