@@ -448,7 +448,6 @@ const accentTable = {
 // Clone exisiting glyph and add diacritical marks
 const accented = {} as Font;
 Object.keys(accentTable).map((char) => {
-  console.log(char, accentTable[char][1])
   accented[char as keyof typeof accented] = [
     ...lowercase[accentTable[char][0] as keyof Font],
     ...accentTable[char][1].reduce((acc: Glyph, a: keyof Font) => [...acc, ...accent[a]], []),

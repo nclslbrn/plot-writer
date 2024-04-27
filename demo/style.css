@@ -16,14 +16,24 @@ body {
 	min-height: 100vh;
 }
 
+#app,
 #app form,
 footer {
 	display: flex;
-	padding: 0 2em;
-  height: 40px;
+  place-items: center center;
+}
+
+#app {
+  flex-flow: column wrap;
+}
+
+#app form,
+footer {
 	flex-flow: row nowrap;
-	align-items: center;
- }
+  height: 40px;
+  width: 90%;
+	padding: 0 5%;
+}
 
 #app form {
   max-height: 40px;
@@ -50,8 +60,10 @@ footer p {
   border: none;
 }
 
-#app svg {
-  background: #fefefecc;
+#app svg g rect {
+  stroke: #ccc;
+  stroke-width: 0.5px;
+  fill: #fefefe66;
 }
 
 @media screen and (min-width: 900px) {
