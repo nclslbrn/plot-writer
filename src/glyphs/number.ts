@@ -111,4 +111,4 @@ const number = {
     ]
 }
 
-export { number }
+export default number

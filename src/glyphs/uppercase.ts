@@ -269,4 +269,4 @@ const uppercase = {
     ]
 }
 
-export { uppercase }
+export default uppercase
