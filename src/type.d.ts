@@ -7,9 +7,9 @@ export interface Line extends Array<Vec> {}
 // Another for letter (array of Line)
 export interface Glyph extends Array<Line> {}
 
-// Table to dupplicate existing glyph with diacritical mark
+// Table to dupplicate existing glyph with diacriticals marks
 export interface ExtendedTable {
-  [key: string]: string[];
+  [key: string]: [string, string[]];
 }
 
 // And finally a type for the whole font
