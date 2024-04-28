@@ -1513,9 +1513,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"plotWritter@workspace:.":
+"plotWriter@workspace:.":
   version: 0.0.0-use.local
-  resolution: "plotWritter@workspace:."
+  resolution: "plotWriter@workspace:."
   dependencies:
     "@types/node": "npm:^20.12.7"
     typescript: "npm:^5.4.5"

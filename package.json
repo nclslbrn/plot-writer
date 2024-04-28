@@ -1,14 +1,14 @@
 {
-  "name": "plotWritter",
+  "name": "plotWriter",
   "version": "0.0.1",
   "type": "module",
-  "main": "./dist/plotWritter.umd.cjs",
-  "module": "./dist/plotWritter.js",
+  "main": "./dist/plotWriter.umd.cjs",
+  "module": "./dist/plotWriter.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/plotWritter.js",
-      "require": "./dist/plotWritter.umd.cjs",
+      "import": "./dist/plotWriter.js",
+      "require": "./dist/plotWriter.umd.cjs",
       "type": "./dist/index.d.ts"
     }
   },
@@ -27,7 +27,7 @@
     "demo:build": "tsc && vite build demo/"
   },
   "description": "Write (SVG) text with JavaScript",
-  "repository": "https://github.com/nclslbrn/plotWritter.git",
+  "repository": "https://github.com/nclslbrn/plotWriter.git",
   "author": "nclslbrn <nclslbrn@gmail.com>",
   "license": "MIT",
   "private": true,

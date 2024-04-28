@@ -7,8 +7,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "artistry-swatch",
-      fileName: "artistry-swatch",
+      name: "plotWriter",
+      fileName: "plotWriter",
     },
   },
   plugins: [dts()],
