@@ -1,5 +1,5 @@
 import { Font, ExtendedTable, Glyph } from "../type";
-
+import diacritics from "./diacritics";
 /*
  * Base alphabet
  */
@@ -256,154 +256,6 @@ const lowercase = {
   ],
 } as Font;
 
-/*
- * Create diacritic to create latin extended
- * @url https://en.wikipedia.org/wiki/Latin_Extended_Additional
- */
-const accent = {
-  // grave accent
-  gr: [
-    [
-      [0.4, 0.1],
-      [0.6, 0.15],
-    ],
-  ],
-  // acute accent
-  ct: [
-    [
-      [0.4, 0.15],
-      [0.6, 0.1],
-    ],
-  ],
-  // circumflex accent
-  cr: [
-    [
-      [0.4, 0.15],
-      [0.5, 0.1],
-      [0.6, 0.15],
-    ],
-  ],
-  // circumflex below
-  crb: [
-    [
-      [0.4, 0.85],
-      [0.5, 0.8],
-      [0.6, 0.85]
-    ]
-  ],
-  // diaeresis
-  dr: [
-    [
-      [0.4, 0.1],
-      [0.4, 0.15],
-    ],
-    [
-      [0.6, 0.1],
-      [0.6, 0.15],
-    ],
-  ],
-  // tild
-  tl: [
-    [
-      [0.4, 0.15],
-      [0.4, 0.1],
-      [0.6, 0.15],
-      [0.6, 0.1],
-    ],
-  ],
-  tlb: [
-    [
-      [0.4, 0.85],
-      [0.4, 0.8],
-      [0.6, 0.85],
-      [0.6, 0.8],
-    ],
-  ],
-
-  // breve
-  br: [
-    [
-      [0.4, 0.1],
-      [0.4, 0.15],
-      [0.6, 0.15],
-      [0.6, 0.1],
-    ],
-  ],
-  // haček or caron
-  hc: [
-    [
-      [0.4, 0.1],
-      [0.5, 0.15],
-      [0.6, 0.1],
-    ],
-  ],
-  // macron
-  mc: [
-    [
-      [0.4, 0.1],
-      [0.6, 0.1],
-    ],
-  ],
-  // angstorm or circle or ring
-  gs: [
-    [
-      [0.45, 0.15],
-      [0.45, 0.1],
-      [0.55, 0.1],
-      [0.55, 0.2],
-      [0.45, 0.15],
-    ],
-  ],
-  // cedilla
-  cd: [
-    [
-      [0.5, 0.7],
-      [0.5, 0.75],
-      [0.55, 0.75],
-      [0.55, 0.8],
-      [0.45, 0.8],
-    ],
-  ],
-  // ring/dot below
-  db: [
-    [
-      [0.5, 0.75],
-      [0.55, 0.8],
-      [0.5, 0.85],
-      [0.45, 0.8],
-      [0.5, 0.75],
-    ],
-  ],
-  // dot above
-  da: [
-    [
-      [0.5, 0],
-      [0.55, 0.05],
-      [0.5, 0.1],
-      [0.45, 0.05],
-      [0.5, 0],
-    ],
-  ],
-  // hook above
-  ha: [
-    [
-      [0.45, 0.2],
-      [0.55, 0.2],
-      [0.55, 0.25],
-      [0.5, 0.25],
-      [0.5, 0.3]
-    ]
-  ],
-  // line below 
-  lb: [
-    [
-      [0.3, 0.8],
-      [0.7, 0.8]
-    ]
-  ]
-
-} as Font;
-
 // Associate diacritics with existing glyph
 const accentTable = {
   à: ["a", ["gr"]],
@@ -416,10 +268,10 @@ const accentTable = {
   ā: ["a", ["mc"]],
   ḁ: ["a", ["db"]],
   ả: ["a", ["ha"]],
-  // ẩ: ["a", ["cr", "ha"]],
-  // ẫ: ["a", ["cr", "tl"]],
-  // ậ: ["a", ["cr", "da"]],
-  // ắ: ["a", ["br", "ct"]],
+  ẩ: ["a", ["cr", "ha"]],
+  ẫ: ["a", ["cr", "tl"]],
+  ậ: ["a", ["cr", "da"]],
+  ắ: ["a", ["br", "ct"]],
   ḃ: ["b", ["da"]],
   ḅ: ["b", ["db"]],
   ḇ: ["b", ["lb"]],
@@ -436,7 +288,7 @@ const accentTable = {
   ḣ: ["h", ["da"]],
   ḥ: ["h", ["db"]],
   ḧ: ["h", ["dr"]],
-  ḩ: ["h", ["cd"]],
+  ḩ: ["h", ["cdl"]],
   ḋ: ["d", ["da"]],
   ḍ: ["d", ["db"]],
   ḏ: ["d", ["lb"]],
@@ -450,7 +302,7 @@ const accented = {} as Font;
 Object.keys(accentTable).map((char) => {
   accented[char as keyof typeof accented] = [
     ...lowercase[accentTable[char][0] as keyof Font],
-    ...accentTable[char][1].reduce((acc: Glyph, a: keyof Font) => [...acc, ...accent[a]], []),
+    ...accentTable[char][1].reduce((acc: Glyph, a: keyof Font) => [...acc, ...diacritics[a]], []),
   ] as Glyph;
 });
 

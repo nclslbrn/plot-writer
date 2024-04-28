@@ -33,7 +33,7 @@ const getGlyphVector = (key: string, size: Vec, pos: Vec): Glyph =>
  * @param key {string} a single char
  * @param size {number[]} a 2D size
  * @param pos {number[]} a 2d coordinate where put the glyph (top left corner)
- * @returns a single Glyph as [[[x1, y1],[x2, y2]...]...] an array of line (array of array of number)
+ * @returns a single Glyph as an array of SVG command (d property of <path> element)
  */
 
 const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
