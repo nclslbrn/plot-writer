@@ -2,19 +2,21 @@ import { font, getGlyphPath } from "../../src/index.ts";
 
 const app = document.getElementById("app"),
   form = document.createElement("form"),
-  svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+  namespace = "http://www.w3.org/2000/svg",
+  svg = document.createElementNS(namespace, "svg"),
   input = document.createElement("textarea"),
-  inputWeight = document.createElement("input"),
+  inputSize = document.createElement("input"),
   textAtLaunch = "Type text",
   glyphKeys = Array.from(Object.keys(font)).join(""),
-  group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  group = document.createElementNS(namespace, "g");
 
 const update = () => {
   const userInput = input.value !== textAtLaunch ? input.value : glyphKeys,
     text = userInput.split("") as string[],
+    fontScale = parseFloat(inputSize.value),
     width = window.innerWidth - 40,
     height = window.innerHeight,
-    baseSize = Math.max(16, Math.min(Math.floor(width * 0.05), 264)),
+    baseSize = Math.max(16, Math.min(Math.floor(width * fontScale), 264)),
     textSize = [baseSize, baseSize * 1.2],
     charPerLine = Math.floor(width / textSize[0]) - 2,
     nbLines = Math.ceil(text.length / charPerLine),
@@ -22,8 +24,7 @@ const update = () => {
       (width - charPerLine * textSize[0]) / 2,
       (height - 40 - nbLines * textSize[1]) / 2,
     ];
-  console.log(textSize);
-  group.textContent = "";
+   group.textContent = "";
 
   for (let y = 0; y < nbLines; y++) {
     const remainingChar = Math.min(charPerLine, text.length - y * charPerLine);
@@ -34,10 +35,7 @@ const update = () => {
         margin[0] + x * textSize[0],
         margin[1] + y * textSize[1],
       ]);
-      const rect = document.createElementNS(
-        "http://www.w3.org/2000/svg",
-        "rect",
-      );
+      const rect = document.createElementNS(namespace, "rect");
       rect.setAttribute("x", `${margin[0] + x * textSize[0]}`);
       rect.setAttribute("y", `${margin[1] + y * textSize[1]}`);
       rect.setAttribute("width", `${textSize[0]}`);
@@ -45,30 +43,25 @@ const update = () => {
       group.appendChild(rect);
 
       lines.map((d: string) => {
-        const path = document.createElementNS(
-          "http://www.w3.org/2000/svg",
-          "path",
-        );
+        const path = document.createElementNS(namespace, "path");
         path.setAttribute("d", d);
         group.appendChild(path);
       });
     }
   }
+  group.setAttribute("stroke-width", `${fontScale * 40}`);
+
   svg.setAttribute("width", `${width}`);
   svg.setAttribute("height", `${height - 40}`);
   svg.setAttribute("viewbox", `0 0 ${width} ${height - 40}`);
 };
-
-const updateWeight = () =>
-  group.setAttribute("stroke-width", inputWeight.value);
 
 const init = () => {
   if (app === null) return;
   form.autocomplete = "off";
 
   group.setAttribute("stroke", "#333");
-  group.setAttribute("stroke-width", "2");
-  group.setAttribute("stroke-lineoin", "round");
+  group.setAttribute("stroke-linejoin", "round");
   group.setAttribute("stroke-linecap", "round");
   group.setAttribute("fill", "rgba(0, 0, 0, 0)");
 
@@ -77,14 +70,15 @@ const init = () => {
   input.innerText = textAtLaunch;
   input.addEventListener("change", update);
 
-  inputWeight.type = "range";
-  inputWeight.min = "1";
-  inputWeight.value = "4";
-  inputWeight.max = "10";
-  inputWeight.addEventListener("change", updateWeight);
+  inputSize.type = "range";
+  inputSize.min = "0.05";
+  inputSize.value = "0.07";
+  inputSize.max = "0.2";
+  inputSize.step = "0.01";
+  inputSize.addEventListener("change", update);
 
   form.appendChild(input);
-  form.appendChild(inputWeight);
+  form.appendChild(inputSize);
   app.appendChild(form);
   app.appendChild(svg);
 };
