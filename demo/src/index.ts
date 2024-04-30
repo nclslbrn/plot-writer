@@ -1,4 +1,13 @@
 import { font, getGlyphPath } from "../../src/index.ts";
+import { Glyph, Line, Vec } from "../../src/type";
+
+console.log(
+  JSON.stringify(
+    font["3"].map(
+      (l: Line) => l.map((v: Vec) => [0.33 + v[0] * 0.33, 0.166 + v[1] * 0.33] as Vec) as Line,
+    ) as Glyph,
+  ),
+);
 
 const app = document.getElementById("app"),
   form = document.createElement("form"),
@@ -24,7 +33,7 @@ const update = () => {
       (width - charPerLine * textSize[0]) / 2,
       (height - 40 - nbLines * textSize[1]) / 2,
     ];
-   group.textContent = "";
+  group.textContent = "";
 
   for (let y = 0; y < nbLines; y++) {
     const remainingChar = Math.min(charPerLine, text.length - y * charPerLine);
@@ -82,7 +91,6 @@ const init = () => {
   app.appendChild(form);
   app.appendChild(svg);
 };
-
 window.addEventListener("resize", update);
 
 init();

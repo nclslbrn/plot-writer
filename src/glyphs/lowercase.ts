@@ -202,6 +202,9 @@ const lowercase = {
       [0.2, 0.3],
       [0.2, 0.7],
       [0.8, 0.7],
+    ],
+    [
+      [0.8, 0.75],
       [0.8, 0.3],
     ],
   ],
@@ -258,6 +261,20 @@ const lowercase = {
 
 // Associate diacritics with existing glyph
 const accentTable = {
+  // a
+  ḁ: ["a", ["db"]],
+  ả: ["a", ["ha"]],
+  ấ: ["a", ["cr", "ct"]],
+  ầ: ["a", ["cr", "gr"]],
+  ẩ: ["a", ["cr", "ha"]],
+  ẫ: ["a", ["cr", "tl"]],
+  ậ: ["a", ["cr", "db"]],
+  ắ: ["a", ["br", "ct"]],
+  ằ: ["a", ["br", "gr"]],
+  ẳ: ["a", ["br", "ct"]],
+  ẵ: ["a", ["br", "tl"]],
+  ặ: ["a", ["br", "db"]],
+
   à: ["a", ["gr"]],
   á: ["a", ["ct"]],
   â: ["a", ["cr"]],
@@ -266,35 +283,81 @@ const accentTable = {
   ă: ["a", ["br"]],
   ǎ: ["a", ["hc"]],
   ā: ["a", ["mc"]],
-  ḁ: ["a", ["db"]],
-  ả: ["a", ["ha"]],
-  ẩ: ["a", ["cr", "ha"]],
-  ẫ: ["a", ["cr", "tl"]],
-  ậ: ["a", ["cr", "da"]],
-  ắ: ["a", ["br", "ct"]],
+
+  // b
   ḃ: ["b", ["da"]],
   ḅ: ["b", ["db"]],
   ḇ: ["b", ["lb"]],
+
+  // c
   ć: ["c", ["ct"]],
   ĉ: ["c", ["cr"]],
   ç: ["c", ["cd"]],
-  ẹ: ["e", ["db"]],
-  ẻ: ["e", ["ha"]],
-  ẽ: ["e", ["tl"]],
-  ḙ: ["e", ["crb"]],
-  ḛ: ["e", ["tlb"]],
-  ḟ: ["f", ["da"]],
-  ḡ: ["g", ["mc"]],
-  ḣ: ["h", ["da"]],
-  ḥ: ["h", ["db"]],
-  ḧ: ["h", ["dr"]],
-  ḩ: ["h", ["cdl"]],
+
+  // d
   ḋ: ["d", ["da"]],
   ḍ: ["d", ["db"]],
   ḏ: ["d", ["lb"]],
   ḑ: ["d", ["cd"]],
-  ḓ: ["d", ["crb"]]
+  ḓ: ["d", ["crb"]],
 
+  // e
+  ẹ: ["e", ["db"]],
+  ẻ: ["e", ["ha"]],
+  ẽ: ["e", ["tl"]],
+  ế: ["e", ["cr", "ct"]],
+  ề: ["e", ["cr", "gr"]],
+  ể: ["e", ["cr", "ha"]],
+  ễ: ["e", ["cr", "tl"]],
+  ệ: ["e", ["cr", "db"]],
+
+  ḙ: ["e", ["crb"]],
+  ḛ: ["e", ["tlb"]],
+
+  // f
+  ḟ: ["f", ["da"]],
+
+  // g
+  ḡ: ["g", ["mc"]],
+
+  // h
+  ḣ: ["h", ["da"]],
+  ḥ: ["h", ["db"]],
+  ḧ: ["h", ["dr"]],
+  ḩ: ["h", ["cdl"]],
+
+  // i
+  Ỉ: ["i", ["ha"]],
+  Ị: ["i", ["db"]],
+
+  // o
+  ọ: ["o", ["db"]],
+  ỏ: ["o", ["ha"]],
+  ố: ["o", ["cr", "ct"]],
+  ồ: ["o", ["cr", "gr"]],
+  ổ: ["o", ["cr", "ha"]],
+  ỗ: ["o", ["cr", "tl"]],
+  ộ: ["o", ["cr", "db"]],
+  ớ: ["o", ["hr", "ct"]],
+  ờ: ["o", ["hr", "gr"]],
+  ở: ["o", ["hr", "ha"]],
+  ỡ: ["o", ["hr", "tl"]],
+  ợ: ["o", ["hr", "db"]],
+
+  // u
+  ụ: ["u", ["db"]],
+  ủ: ["u", ["ha"]],
+  ứ: ["u", ["hr", "ct"]],
+  ừ: ["u", ["hr", "gr"]],
+  ử: ["u", ["hr", "ha"]],
+  ữ: ["u", ["hr", "tl"]],
+  ự: ["u", ["hr", "db"]],
+
+  // y
+  ỳ: ["y", ["gr"]],
+  ỵ: ["y", ["db"]],
+  ỷ: ["y", ["ha"]],
+  ỹ: ["y", ["tl"]],
 } as ExtendedTable;
 
 // Clone exisiting glyph and add diacritical marks
@@ -302,7 +365,10 @@ const accented = {} as Font;
 Object.keys(accentTable).map((char) => {
   accented[char as keyof typeof accented] = [
     ...lowercase[accentTable[char][0] as keyof Font],
-    ...accentTable[char][1].reduce((acc: Glyph, a: keyof Font) => [...acc, ...diacritics[a]], []),
+    ...accentTable[char][1].reduce(
+      (acc: Glyph, a: keyof Font) => [...acc, ...diacritics[a]],
+      [],
+    ),
   ] as Glyph;
 });
 
