@@ -4,7 +4,7 @@ import { Glyph, Line, Vec } from "../../src/type";
 console.log(
   JSON.stringify(
     font["3"].map(
-      (l: Line) => l.map((v: Vec) => [0.33 + v[0] * 0.33, 0.166 + v[1] * 0.33] as Vec) as Line,
+      (l: Line) => l.map((v: Vec) => [0.166 + v[0] * 0.33, 0.166 + v[1] * 0.33] as Vec) as Line,
     ) as Glyph,
   ),
 );
@@ -20,29 +20,30 @@ const app = document.getElementById("app"),
   group = document.createElementNS(namespace, "g");
 
 const update = () => {
+  let height = window.innerHeight
   const userInput = input.value !== textAtLaunch ? input.value : glyphKeys,
     text = userInput.split("") as string[],
     fontScale = parseFloat(inputSize.value),
     width = window.innerWidth - 40,
-    height = window.innerHeight,
-    baseSize = Math.max(16, Math.min(Math.floor(width * fontScale), 264)),
+    baseSize = Math.max(16, Math.min(Math.floor(Math.hypot(width, height) * fontScale), 264)),
     textSize = [baseSize, baseSize * 1.2],
     charPerLine = Math.floor(width / textSize[0]) - 2,
     nbLines = Math.ceil(text.length / charPerLine),
     margin = [
       (width - charPerLine * textSize[0]) / 2,
-      (height - 40 - nbLines * textSize[1]) / 2,
+      40,
     ];
   group.textContent = "";
 
   for (let y = 0; y < nbLines; y++) {
     const remainingChar = Math.min(charPerLine, text.length - y * charPerLine);
+    if ((y+1)*textSize[1] >= height-margin[1]) height += (textSize[1]+margin[1])
 
     for (let x = 0; x < remainingChar; x++) {
       const char = text[y * charPerLine + x];
       const lines = getGlyphPath(char, textSize, [
         margin[0] + x * textSize[0],
-        margin[1] + y * textSize[1],
+        margin[1] + y * textSize[1], textSize[1]
       ]);
       const rect = document.createElementNS(namespace, "rect");
       rect.setAttribute("x", `${margin[0] + x * textSize[0]}`);
@@ -61,8 +62,8 @@ const update = () => {
   group.setAttribute("stroke-width", `${fontScale * 40}`);
 
   svg.setAttribute("width", `${width}`);
-  svg.setAttribute("height", `${height - 40}`);
-  svg.setAttribute("viewbox", `0 0 ${width} ${height - 40}`);
+  svg.setAttribute("height", `${height+40}`);
+  svg.setAttribute("viewbox", `0 0 ${width} ${height+40}`);
 };
 
 const init = () => {
