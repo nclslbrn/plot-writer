@@ -1,5 +1,5 @@
 import { type Vec, Line, Glyph, Font } from "./type";
-import lowercase from "./glyphs/lowercase";
+import lowercase from "./glyphs/lowercase/index";
 import uppercase from "./glyphs/uppercase";
 import ponctuation from "./glyphs/poncuation";
 import number from './glyphs/number';

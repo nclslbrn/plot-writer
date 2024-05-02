@@ -1,13 +1,15 @@
-
+{
 	"compilerOptions": {
-		"target": "ES2020",
+		"target": "ESNext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
-		"lib": ["ES2020", "DOM", "DOM.Iterable"],
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
+    "types":  ["vite/client", "node"],
+    "strict": true,
 
 		/* Bundler mode */
-		"moduleResolution": "bundler",
+		"moduleResolution": "Node",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
@@ -19,6 +21,6 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"],
-	"exclude": ["__tests__/*.ts"]
+	"include": ["./src"],
+	"exclude": ["__tests__/*.ts", "node_modules"]
 }

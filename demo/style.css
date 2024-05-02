@@ -63,7 +63,6 @@ footer p {
 #app svg g rect {
   stroke: #ccc;
   stroke-width: 0.5px;
-  fill: #fefefe66;
 }
 
 @media screen and (min-width: 900px) {
