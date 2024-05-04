@@ -18,7 +18,7 @@ const rotateGlyph = (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [1 - p[0]
 const scaleGlyph = (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [0.25 + p[0] * 0.5, 0.25 + p[1] * 0.5]))
 
 // font["ʙ"] = scaleGlyph(font["B"])
-console.log(JSON.stringify(scaleGlyph(font['6'])))
+// console.log(JSON.stringify(scaleGlyph(font['6'])))
 
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) { 
@@ -47,7 +47,7 @@ const update = () => {
     fontScale = parseFloat(inputSize.value),
     width = window.innerWidth - 40,
     baseSize = Math.max(16, Math.min(Math.floor(Math.hypot(width, height) * fontScale), 264)),
-    textSize = [baseSize, baseSize * 1.2],
+    textSize = [baseSize, baseSize],
     charPerLine = Math.floor(width / textSize[0]) - 2,
     nbLines = Math.ceil(text.length / charPerLine),
     margin = [

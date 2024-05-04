@@ -25,8 +25,8 @@ const topDiaCount = (diaKey: keyof Font): number =>
 
 const moveDia = {
   tp: (g: Glyph) =>
-    g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.0625])),
-  bt: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] + 0.125])),
+    g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.08])),
+  bt: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] + 0.08])),
   lf: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] - 0.125, p[1]])),
   rg: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] + 0.125, p[1]])),
 };
@@ -39,8 +39,17 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
     0,
   );
   if (diaKeys.length > 1 && multipleTopDia > 1) {
+    // move macron down
+    if (diaKeys.includes("mc")) {
+      return diaKeys
+        .filter((k: keyof Font) => k !== "mc")
+        .reduce(
+          (g: Glyph, k: keyof Font) => [...g, ...diacritics[k]],
+          [...moveDia.bt(diacritics["mc"])],
+        );
+    } 
     // move acute accent left
-    if (diaKeys.includes("ct")) {
+    else if (diaKeys.includes("ct")) {
       return diaKeys
         .filter((k: keyof Font) => k !== "ct")
         .reduce(
@@ -81,15 +90,7 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
           [...moveDia.tp(diacritics["tl"])],
         );
     }
-    // else move macron up
-    else if (diaKeys.includes("mc")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "mc")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [...g, ...diacritics[k]],
-          [...moveDia.tp(diacritics["mc"])],
-        );
-    } else {
+    else {
       return diaKeys.reduce(
         (acc: Glyph, k: keyof Font) => [...acc, ...diacritics[k]],
         [] as Glyph,
