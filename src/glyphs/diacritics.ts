@@ -7,15 +7,15 @@ const diacritics = {
   // grave accent
   gr: [
     [
-      [0.4, 0.1],
-      [0.6, 0.15],
+      [0.45, 0.1],
+      [0.55, 0.15],
     ],
   ],
   // acute accent
   ct: [
     [
-      [0.4, 0.15],
-      [0.6, 0.1],
+      [0.45, 0.15],
+      [0.55, 0.1],
     ],
   ],
   // circumflex accent
@@ -99,7 +99,7 @@ const diacritics = {
       [0.6, 0.2],
     ],
   ],
-  // haček or caron
+  // haček
   hc: [
     [
       [0.4, 0.1],
@@ -213,7 +213,7 @@ const diacritics = {
       [0.85, 0.3],
       [0.85, 0.25],
       [0.90, 0.2],
-    ],
+    ] ,
   ],
   // barred (kind of /)
   brd: [

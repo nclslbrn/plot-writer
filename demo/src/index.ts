@@ -51,7 +51,7 @@ const mirrorYGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-console.log(JSON.stringify(scaleGlyph(font["H"])));
+console.log(JSON.stringify(scaleGlyph(font["L"])));
 
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
@@ -76,7 +76,7 @@ const update = () => {
   let height = window.innerHeight;
   const userInput = input.value !== textAtLaunch ? input.value : glyphKeys,
     text = userInput.split("") as string[],
-    fontScale = parseFloat(inputSize.value),
+    fontScale = 0.2, //parseFloat(inputSize.value),
     width = window.innerWidth - 40,
     baseSize = Math.max(
       16,
@@ -141,7 +141,7 @@ const init = () => {
 
   inputSize.type = "range";
   inputSize.min = "0.05";
-  inputSize.value = "0.07";
+  inputSize.value = "0.17";
   inputSize.max = "0.2";
   inputSize.step = "0.01";
   inputSize.addEventListener("change", update);
