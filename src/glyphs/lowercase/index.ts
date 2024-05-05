@@ -24,12 +24,17 @@ const topDiaCount = (diaKey: keyof Font): number =>
   topDia.includes(diaKey) ? 1 : 0;
 
 const moveDia = {
-  tp: (g: Glyph) =>
-    g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.08])),
+  tp: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.08])),
   bt: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] + 0.08])),
   lf: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] - 0.125, p[1]])),
   rg: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] + 0.125, p[1]])),
 };
+
+const joinVector = (diaStack: Glyph[], movedDia: Glyph): Glyph =>
+  diaStack.reduce(
+    (out: Glyph, curr: Glyph) => [...out, ...curr],
+    [...movedDia],
+  );
 
 const mergeDia = (diaKeys: DiaGroup): Glyph => {
   // check if theres is two diacritics and
@@ -39,58 +44,48 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
     0,
   );
   if (diaKeys.length > 1 && multipleTopDia > 1) {
+    // check double grave
+    if (diaKeys.reduce((ct: number, k: keyof Font)=> ct += k === 'gr' ? 1 : 0, 0) > 1) {
+      return joinVector(
+        diaKeys.filter((k) => k != "gr").map((k) => diacritics[k]),
+        [...moveDia.lf(diacritics['gr']), ...moveDia.rg(diacritics['gr'])]
+      )
+    }
     // move macron down
     if (diaKeys.includes("mc")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "mc")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [...g, ...diacritics[k]],
-          [...moveDia.bt(diacritics["mc"])],
-        );
-    } 
+      return joinVector(
+        diaKeys.filter((k) => k != "mc").map((k) => diacritics[k]),
+        moveDia.bt(diacritics["mc"]),
+      );
+    }
     // move acute accent left
     else if (diaKeys.includes("ct")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "ct")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [
-            ...g,
-            ...(topDia.includes(k) ? moveDia.rg(diacritics[k]) : diacritics[k]),
-          ],
-          [...moveDia.lf(diacritics["ct"])],
-        );
+      return joinVector(
+        diaKeys.filter((k) => k != "ct").map((k) => diacritics[k]),
+        moveDia.bt(diacritics["ct"]),
+      );
     }
     // move grave accent right
     else if (diaKeys.includes("gr")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "gr")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [
-            ...g,
-            ...(topDia.includes(k) ? moveDia.lf(diacritics[k]) : diacritics[k]),
-          ],
-          [...moveDia.rg(diacritics["gr"])],
-        );
+      return joinVector(
+        diaKeys.filter((k) => k != "gr").map((k) => diacritics[k]),
+        moveDia.bt(diacritics["gr"]),
+      );
     }
     // move breve bottom
     else if (diaKeys.includes("br")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "br")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [...g, ...diacritics[k]],
-          [...moveDia.bt(diacritics["br"])],
-        );
+      return joinVector(
+        diaKeys.filter((k) => k != "br").map((k) => diacritics[k]),
+        moveDia.bt(diacritics["br"]),
+      );
     }
     // move tild up
     else if (diaKeys.includes("tl")) {
-      return diaKeys
-        .filter((k: keyof Font) => k !== "tl")
-        .reduce(
-          (g: Glyph, k: keyof Font) => [...g, ...diacritics[k]],
-          [...moveDia.tp(diacritics["tl"])],
-        );
-    }
-    else {
+      return joinVector(
+        diaKeys.filter((k) => k != "tl").map((k) => diacritics[k]),
+        moveDia.bt(diacritics["tl"]),
+      );
+    } else {
       return diaKeys.reduce(
         (acc: Glyph, k: keyof Font) => [...acc, ...diacritics[k]],
         [] as Glyph,

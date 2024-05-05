@@ -72,6 +72,15 @@ const diacritics = {
       [0.6, 0.1],
     ],
   ],
+  // breve below
+  brb: [
+    [
+      [0.4, 0.8],
+      [0.4, 0.85],
+      [0.6, 0.85],
+      [0.6, 0.8]
+    ]
+  ],
   // inverse breve
   bri: [
     [
