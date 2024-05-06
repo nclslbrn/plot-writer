@@ -51,6 +51,14 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
         [...moveDia.lf(diacritics['gr']), ...moveDia.rg(diacritics['gr'])]
       )
     }
+    // check double acute
+    if (diaKeys.reduce((ct: number, k: keyof Font)=> ct += k === 'ct' ? 1 : 0, 0) > 1) {
+      return joinVector(
+        diaKeys.filter((k) => k != "ct").map((k) => diacritics[k]),
+        [...moveDia.lf(diacritics['ct']), ...moveDia.rg(diacritics['ct'])]
+      )
+    }
+
     // move macron down
     if (diaKeys.includes("mc")) {
       return joinVector(

@@ -37,7 +37,7 @@ console.log(
   ),
 );
 */
-/*
+
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
 const upscaleGlyph = (g: Glyph) =>
@@ -45,14 +45,14 @@ const upscaleGlyph = (g: Glyph) =>
 
 const scaleGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [0.166 + p[0] * 0.66, 0.166 + p[1] * 0.66]));
-const mirrorXGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [p[0], 1 - p[1]]));
 const mirrorYGlyph = (g: Glyph) =>
+  g.map((l: Line) => l.map((p: Vec) => [p[0], 1 - p[1]]));
+const mirrorXGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-console.log(JSON.stringify(scaleGlyph(font["L"])));
-*/
+// alert(`ɴ: ${JSON.stringify(scaleGlyph(font["N"]))},`);
+
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
     console.log(`%c ${lowercase[l]}`, "font-size: 3em");
@@ -83,7 +83,7 @@ const update = () => {
       Math.min(Math.floor(Math.hypot(width, height) * fontScale), 264),
     ),
     textSize = [baseSize, baseSize],
-    charPerLine = Math.floor(width / textSize[0]) - 2,
+    charPerLine = Math.floor(width / textSize[0]),
     nbLines = Math.ceil(text.length / charPerLine),
     margin = [(width - charPerLine * textSize[0]) / 2, 40];
   group.textContent = "";
@@ -138,13 +138,15 @@ const init = () => {
 
   input.innerText = textAtLaunch;
   input.addEventListener("change", update);
-
   inputSize.type = "range";
   inputSize.min = "0.05";
-  inputSize.value = "0.17";
   inputSize.max = "0.2";
   inputSize.step = "0.01";
-  inputSize.addEventListener("change", update);
+  inputSize.value = "0.12";
+  inputSize.addEventListener("change", (e) => {
+    console.log((e.target as HTMLInputElement).value);
+    update();
+  });
 
   form.appendChild(input);
   form.appendChild(inputSize);
