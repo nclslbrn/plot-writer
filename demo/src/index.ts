@@ -37,7 +37,7 @@ console.log(
   ),
 );
 */
-
+/*
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
 const upscaleGlyph = (g: Glyph) =>
@@ -52,7 +52,7 @@ const mirrorYGlyph = (g: Glyph) =>
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
 console.log(JSON.stringify(scaleGlyph(font["L"])));
-
+*/
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
     console.log(`%c ${lowercase[l]}`, "font-size: 3em");
@@ -76,7 +76,7 @@ const update = () => {
   let height = window.innerHeight;
   const userInput = input.value !== textAtLaunch ? input.value : glyphKeys,
     text = userInput.split("") as string[],
-    fontScale = 0.2, //parseFloat(inputSize.value),
+    fontScale = parseFloat(inputSize.value),
     width = window.innerWidth - 40,
     baseSize = Math.max(
       16,
