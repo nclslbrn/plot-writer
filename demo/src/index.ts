@@ -28,15 +28,6 @@ const lowercase = [
   ..."yýỳŷẙÿỹẏȳỷỵʏɏƴỿȝ",
   ..."zźẑžżẓẕƍƶȥʐʑɀʒǯƹƺʓþƿƨƽƅɂʕʡʢʖʗʘʬʭ",
 ];
-/*
-console.log(
-  JSON.stringify(
-    font["3"].map(
-      (l: Line) => l.map((v: Vec) => [0.166 + v[0] * 0.33, 0.166 + v[1] * 0.33] as Vec) as Line,
-    ) as Glyph,
-  ),
-);
-*/
 
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
@@ -51,7 +42,8 @@ const mirrorXGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-// alert(`ɴ: ${JSON.stringify(scaleGlyph(font["N"]))},`);
+// alert(`ʁ: ${JSON.stringify(scaleGlyph(rotateGlyph(font["R"])))},`);
+
 
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
@@ -127,7 +119,7 @@ const update = () => {
 
 const init = () => {
   if (app === null) return;
-  form.autocomplete = "off";
+  //form.autocomplete = "off";
 
   group.setAttribute("stroke", "#333");
   group.setAttribute("stroke-linejoin", "round");
@@ -137,23 +129,22 @@ const init = () => {
   svg.appendChild(group);
 
   input.innerText = textAtLaunch;
+  input.addEventListener("input", update);
   input.addEventListener("change", update);
+
   inputSize.type = "range";
   inputSize.min = "0.05";
   inputSize.max = "0.2";
   inputSize.step = "0.01";
-  inputSize.value = "0.12";
-  inputSize.addEventListener("change", (e) => {
-    console.log((e.target as HTMLInputElement).value);
-    update();
-  });
+  inputSize.value = "0.07";
+
+  inputSize.addEventListener("change", update);
 
   form.appendChild(input);
   form.appendChild(inputSize);
   app.appendChild(form);
   app.appendChild(svg);
+  update();
 };
-window.addEventListener("resize", update);
 
 init();
-update();
