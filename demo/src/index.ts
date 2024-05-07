@@ -136,7 +136,7 @@ const init = () => {
   inputSize.min = "0.05";
   inputSize.max = "0.2";
   inputSize.step = "0.01";
-  inputSize.value = "0.07";
+  inputSize.value = "0.1";
 
   inputSize.addEventListener("change", update);
 
