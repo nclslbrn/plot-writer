@@ -18,14 +18,15 @@ const topDia = [
   "gs",
   "da",
   "ha",
+  "hc"
 ] as Array<keyof Font>;
 
 const topDiaCount = (diaKey: keyof Font): number =>
   topDia.includes(diaKey) ? 1 : 0;
 
 const moveDia = {
-  tp: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.2])),
-  bt: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] + 0.08])),
+  tp: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] - 0.125])),
+  bt: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0], p[1] + 0.1])),
   lf: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] - 0.125, p[1]])),
   rg: (g: Glyph) => g.map((l: Line) => l.map((p: Vec) => [p[0] + 0.125, p[1]])),
 };
@@ -67,7 +68,7 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
         moveDia.bt(diacritics["tl"]),
       );
     }
-    // move tild down
+    // move hacek down
     else if (diaKeys.includes("hc")) {
       return joinVector(
         diaKeys.filter((k) => k != "hc").map((k) => diacritics[k]),
@@ -94,14 +95,8 @@ const mergeDia = (diaKeys: DiaGroup): Glyph => {
         diaKeys.filter((k) => k != "gr").map((k) => diacritics[k]),
         moveDia.bt(diacritics["gr"]),
       );
-    }
-    // move breve bottom
-    else if (diaKeys.includes("br")) {
-      return joinVector(
-        diaKeys.filter((k) => k != "br").map((k) => diacritics[k]),
-        moveDia.bt(diacritics["br"]),
-      );
-    } else {
+    } 
+    else {
       return diaKeys.reduce(
         (acc: Glyph, k: keyof Font) => [...acc, ...diacritics[k]],
         [] as Glyph,
