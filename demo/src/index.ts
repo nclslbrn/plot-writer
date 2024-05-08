@@ -44,7 +44,7 @@ const mirrorXGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-//alert(`ʁ: ${JSON.stringify(scaleGlyph(mirrorXGlyph(rotateGlyph(font["R"]))))},`);
+//alert(`ɯ: ${JSON.stringify(mirrorXGlyph(font["w"]))},`);
 
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
