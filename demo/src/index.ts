@@ -44,7 +44,7 @@ const mirrorXGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-//alert(`ɯ: ${JSON.stringify(mirrorXGlyph(font["w"]))},`);
+// alert(`ʏ: ${JSON.stringify(scaleGlyph(font["Y"]))},`);
 
 for (let l = 0; l < lowercase.length; l++) {
   if (font[lowercase[l]] === undefined) {
@@ -99,13 +99,14 @@ const update = () => {
       rect.setAttribute("width", `${textSize[0]}`);
       rect.setAttribute("height", `${textSize[1]}`);
       rect.setAttribute("title", char);
+      /*
       const label = document.createElementNS(namespace, "text");
       label.setAttribute("x", `${margin[0] + x * textSize[0] + 10}`);
       label.setAttribute("y", `${margin[1] + y * textSize[1] + 20}`);
       label.setAttribute("font-size", `${fontScale*20}em`)
       label.textContent = char;
       group.appendChild(label);
-
+      */
       lines.map((d: string) => {
         const path = document.createElementNS(namespace, "path");
         path.setAttribute("d", d);
