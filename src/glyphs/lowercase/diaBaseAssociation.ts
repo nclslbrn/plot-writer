@@ -305,9 +305,22 @@ const diaBaseAssociation = {
   ỹ: ["y", ["tl"]],
   ẏ: ["y", ["da"]],
   ȳ: ["y", ["mc"]],
-
   ỵ: ["y", ["db"]],
   ỷ: ["y", ["ha"]],
+
+  // z 
+  ź: ["z", ["ct"]],
+  ẑ: ["z", ["cr"]],
+  ž: ["z", ["hc"]],
+  ż: ["z", ["da"]],
+  ẓ: ["z", ["db"]],
+  ẕ: ["z", ["lb"]],
+  ȥ: ["z", ["hbr"]],
+  ǯ: ["ʒ", ["hc"]],
+
+  //ž: ["z", ["hc"]],
+  //ž: ["z", ["hc"]],
+
 } as ExtendedTable;
 
 export { diaBaseAssociation };
