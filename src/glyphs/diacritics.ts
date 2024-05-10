@@ -136,6 +136,17 @@ const diacritics = {
       [0.45, 0.15],
     ],
   ],
+  // angstorm or circle or ring (bottom)
+  gsb: [
+    [
+      [0.45, 0.9],
+      [0.45, 0.85],
+      [0.55, 0.85],
+      [0.55, 0.9],
+      [0.45, 0.9],
+    ],
+  ],
+ 
   // cedilla
   cd: [
     [
@@ -235,7 +246,7 @@ const diacritics = {
   // barred (kind of /)
   brd: [
     [
-      [0.55, 0.2],
+      [0.65, 0.1],
       [0.35, 0.8],
     ],
   ],

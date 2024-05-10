@@ -1,34 +1,8 @@
 import { font, getGlyphPath } from "../../src/index.ts";
 import { Glyph, Line, Vec } from "../../src/type";
-const lowercase = [
-  ..."aáàăắằẵẳâấầẫẩǎåǻäǟãȧǡąāảȁȃạặậḁæǽǣẚɐɑɒ",
-  ..."bḃḅḇʙƀɓƃ",
-  ..."cćĉčċçḉȼƈɕ",
-  ..."dďḋḑđḍḓḏðȸǳʣǆʥʤɖɗƌȡẟ",
-  ..."eéèĕêếềễểěëẽėȩḝęēḗḕẻȅȇẹệḙḛɇǝəɛɘɚɜɝɞʚɤ",
-  ..."fḟʩƒ",
-  ..."gǵğĝǧġģḡɡɢǥɠʛɣ",
-  ..."ƣhĥȟḧḣḩħḥḫẖʜƕɦɧ",
-  ..."iíìĭîǐïḯĩįīỉȉȋịḭĳıɪɨɩ",
-  ..."jĵǰȷɉʝɟʄ",
-  ..."kḱǩķḳḵƙʞ",
-  ..."lĺľļłḷḹḽḻŀǉỻʪʫʟƚɫɬɭȴɮƛʎ",
-  ..."mḿṁṃɱ",
-  ..."nńǹňñṅņṇṋṉǌɴɲƞɳȵŋ",
-  ..."oóòŏôốồỗổǒöȫőõṍṏȭȯȱøǿǫǭōṓṑỏȍȏơớờỡởợọộœɶɔɵɷȣ",
-  ..."pṕṗƥɸqȹʠ",
-  ..."ɋĸ",
-  ..."rŕřṙŗȑȓṛṝṟʀɍɹɺɻɼɽɾɿʁ",
-  ..."sśṥŝšṧṡşṣṩșſẛßʂȿẜẝʃƪʅʆ",
-  ..."tťẗṫţṭțṱṯʨƾʦʧŧƫƭʈȶʇ",
-  ..."uúùŭûǔůüǘǜǚǖűũṹųūṻủȕȗưứừữửựụṳṷṵʉɥʮʯɯɰʊ",
-  ..."vṽṿʋỽʌ",
-  ..."wẃẁŵẘẅẇẉʍ",
-  ..."xẍẋ",
-  ..."yýỳŷẙÿỹẏȳỷỵʏɏƴỿȝ",
-  ..."zźẑžżẓẕƍƶȥʐʑɀʒǯƹƺʓþƿƨƽƅɂʕʡʢʖʗʘʬʭ",
-],
-DEBUG = false;
+import letters from "./letters"
+
+const DEBUG = false;
 
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
@@ -47,12 +21,12 @@ const mirrorYGlyph = (g: Glyph) =>
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
 // alert(`ʖ: ${JSON.stringify(rotateGlyph(font["ʕ"]))},`);
 
-for (let l = 0; l < lowercase.length; l++) {
-  if (font[lowercase[l]] === undefined) {
-    console.log(`%c ${lowercase[l]}`, "font-size: 3em");
+for (let l = 0; l < letters.length; l++) {
+  if (font[letters[l]] === undefined) {
+    console.log(`%c ${letters[l]}`, "font-size: 3em");
     break;
   } else {
-    console.log(`%c ✅${lowercase[l]}`, "font-size: 2.5em");
+    console.log(`%c ✅${letters[l]}`, "font-size: 2.5em");
   }
 }
 
