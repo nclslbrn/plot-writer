@@ -7,7 +7,7 @@ const DEBUG = false;
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
 const upscaleGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [p[0] * 1.1 - 0.05, p[1] * 1.1 - 0.05]));
+  g.map((l: Line) => l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]));
 
 const scaleGlyph = (g: Glyph) =>
   g.map((l: Line) =>
@@ -19,7 +19,7 @@ const mirrorYGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
-// alert(`ʖ: ${JSON.stringify(rotateGlyph(font["ʕ"]))},`);
+// alert(`Ɣ: ${JSON.stringify(upscaleGlyph(font["ɣ"]))},`);
 
 for (let l = 0; l < letters.length; l++) {
   if (font[letters[l]] === undefined) {
