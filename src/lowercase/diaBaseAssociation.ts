@@ -1,4 +1,4 @@
-import { type ExtendedTable } from "../../type";
+import { type ExtendedTable } from "../type";
 
 // Associate diacritics with existing glyph
 const diaBaseAssociation = {
@@ -17,7 +17,7 @@ const diaBaseAssociation = {
   ẩ: ["a", ["cr", "ha"]],
   ǎ: ["a", ["hc"]],
   å: ["a", ["gs"]],
-  ǻ: ["a", ["gs", "ha"]],
+  ǻ: ["a", ["gs", "ct"]],
   ä: ["a", ["dr"]],
   ǟ: ["a", ["dr", "mc"]],
   ã: ["a", ["tl"]],

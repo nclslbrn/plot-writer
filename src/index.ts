@@ -1,8 +1,8 @@
 import { type Vec, Line, Glyph, Font } from "./type";
-import lowercase from "./glyphs/lowercase/index";
-import uppercase from "./glyphs/uppercase/index";
-import ponctuation from "./glyphs/poncuation";
-import number from './glyphs/number';
+import lowercase from "./lowercase/index";
+import uppercase from "./uppercase/index";
+import ponctuation from "./poncuation";
+import number from './number';
 
 const font = { ...lowercase, ...uppercase, ...ponctuation, ...number } as Font;
 
