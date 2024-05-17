@@ -2,7 +2,7 @@ import { type Vec, Line, Glyph, Font } from "./type";
 import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
 import ponctuation from "./poncuation";
-import number from './number';
+import number from "./number";
 
 const font = { ...lowercase, ...uppercase, ...ponctuation, ...number } as Font;
 
@@ -49,7 +49,7 @@ const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
     );
   } else {
     console.warn(
-      "Can't retrieve this glyph, be sure to use this function with a single char",
+      `Missing glyph ${key}, You can create it (and add it to this repository by making a pull request) or open an issue.`,
     );
     return [];
   }
