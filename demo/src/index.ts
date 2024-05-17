@@ -1,13 +1,15 @@
 import { font, getGlyphPath } from "../../src/index.ts";
 import { Glyph, Line, Vec } from "../../src/type";
-import letters from "./letters"
+import letters from "./letters";
 
-const DEBUG = false;
+const DEBUG = true;
 
 const rotateGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
 const upscaleGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]));
+  g.map((l: Line) =>
+    l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]),
+  );
 
 const scaleGlyph = (g: Glyph) =>
   g.map((l: Line) =>
@@ -21,12 +23,14 @@ const mirrorYGlyph = (g: Glyph) =>
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
 // alert(`Ɣ: ${JSON.stringify(upscaleGlyph(font["ɣ"]))},`);
 
+const fontFamily =
+  'ui-monospace, Menlo, Monaco,"Cascadia Mono", "Segoe UI Mono", "Roboto Mono","Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;';
 for (let l = 0; l < letters.length; l++) {
   if (font[letters[l]] === undefined) {
-    console.log(`%c ${letters[l]}`, "font-size: 3em");
+    console.log(`%c ${letters[l]}`, `${fontFamily} font-size: 3em`);
     break;
   } else {
-    console.log(`%c ✅${letters[l]}`, "font-size: 2.5em");
+    console.log(`%c ✅${letters[l]}`, `${fontFamily} font-size: 2.5em`);
   }
 }
 
@@ -50,7 +54,7 @@ const update = () => {
       16,
       Math.min(Math.floor(Math.hypot(width, height) * fontScale), 264),
     ),
-    textSize = [baseSize, baseSize],
+    textSize = [baseSize, baseSize * 1.6],
     charPerLine = Math.floor(width / textSize[0]),
     nbLines = Math.ceil(text.length / charPerLine),
     margin = [(width - charPerLine * textSize[0]) / 2, 40];
@@ -74,16 +78,16 @@ const update = () => {
       rect.setAttribute("width", `${textSize[0]}`);
       rect.setAttribute("height", `${textSize[1]}`);
       rect.setAttribute("title", char);
-      
+
       if (DEBUG) {
         const label = document.createElementNS(namespace, "text");
         label.setAttribute("x", `${margin[0] + x * textSize[0] + 10}`);
         label.setAttribute("y", `${margin[1] + y * textSize[1] + 20}`);
-        label.setAttribute("font-size", `${fontScale*15}em`)
+        label.setAttribute("font-size", `${fontScale * 15}em`);
         label.textContent = char;
         group.appendChild(label);
       }
-    
+
       lines.map((d: string) => {
         const path = document.createElementNS(namespace, "path");
         path.setAttribute("d", d);
@@ -92,7 +96,7 @@ const update = () => {
       group.appendChild(rect);
     }
   }
-  group.setAttribute("stroke-width", `${fontScale * 40}`);
+  group.setAttribute("stroke-width", `${fontScale * 30}`);
 
   svg.setAttribute("width", `${width}`);
   svg.setAttribute("height", `${height + 40}`);
@@ -115,7 +119,7 @@ const init = () => {
   input.addEventListener("change", update);
 
   inputSize.type = "range";
-  inputSize.min = "0.05";
+  inputSize.min = "0.01";
   inputSize.max = "0.2";
   inputSize.step = "0.01";
   inputSize.value = "0.1";
