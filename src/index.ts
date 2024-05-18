@@ -3,8 +3,19 @@ import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
 import ponctuation from "./poncuation";
 import number from "./number";
+import currency from "./currency";
 
-const font = { ...lowercase, ...uppercase, ...ponctuation, ...number } as Font;
+/*
+ * Destructure every glyphs groups and assign glyph key to theirs paths
+ * font.a = [[[x1, y1], [x2, y2]...]]
+ */
+const font = {
+  ...lowercase,
+  ...uppercase,
+  ...number,
+  ...ponctuation,
+  ...currency,
+} as Font;
 
 /**
  * A function to move and scale each glyph vertex/point/Vec coordinate
