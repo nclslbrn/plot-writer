@@ -3,23 +3,23 @@ import { Glyph, Line, Vec } from "../../src/type";
 import letters from "./letters";
 
 const DEBUG = true;
-
-const rotateGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
-const upscaleGlyph = (g: Glyph) =>
-  g.map((l: Line) =>
-    l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]),
-  );
-
-const scaleGlyph = (g: Glyph) =>
-  g.map((l: Line) =>
-    l.map((p: Vec) => [0.166 + p[0] * 0.66, 0.166 + p[1] * 0.66]),
-  );
-const mirrorXGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [p[0], 1 - p[1]]));
-const mirrorYGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
-
+//
+// const rotateGlyph = (g: Glyph) =>
+//   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
+// const upscaleGlyph = (g: Glyph) =>
+//   g.map((l: Line) =>
+//     l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]),
+//   );
+//
+// const scaleGlyph = (g: Glyph) =>
+//   g.map((l: Line) =>
+//     l.map((p: Vec) => [0.166 + p[0] * 0.66, 0.166 + p[1] * 0.66]),
+//   );
+// const mirrorXGlyph = (g: Glyph) =>
+//   g.map((l: Line) => l.map((p: Vec) => [p[0], 1 - p[1]]));
+// const mirrorYGlyph = (g: Glyph) =>
+//   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
+//
 // font["ɜ"] = mirrorYGlyph(font["ɛ"])
 // alert(`Ɣ: ${JSON.stringify(upscaleGlyph(font["ɣ"]))},`);
 
@@ -41,7 +41,8 @@ const app = document.getElementById("app"),
   input = document.createElement("textarea"),
   inputSize = document.createElement("input"),
   textAtLaunch = "Type text",
-  glyphKeys = Array.from(Object.keys(font)).join(""),
+  fontKey = Array.from(Object.keys(font)),
+  glyphKeys = letters.filter((l) => fontKey.includes(l)).join(""),
   group = document.createElementNS(namespace, "g");
 
 const update = () => {
