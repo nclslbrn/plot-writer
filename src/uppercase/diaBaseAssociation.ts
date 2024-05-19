@@ -183,7 +183,7 @@ const diaBaseAssociation = {
   Ṏ: ["O", ["tl", "dr"]],
   Ȭ: ["O", ["tl", "mc"]],
   Ȯ: ["O", ["da"]],
-  Ȱ: ["O", ["db", "mc"]],
+  Ȱ: ["O", ["da", "mc"]],
   Ø: ["O", ["brd"]],
   Ǿ: ["O", ["brd", "ct"]],
   Ǫ: ["O", ["gnkc"]],
@@ -220,7 +220,7 @@ const diaBaseAssociation = {
 
   // S
   Ś: ["S", ["ct"]],
-  Ṥ: ["S", ["ct", "da"]],
+  Ṥ: ["S", ["ct", "da"]], // these two diacritics overlap
   Ŝ: ["S", ["cr"]],
   Š: ["S", ["hc"]],
   Ṧ: ["S", ["hc", "da"]],
@@ -304,7 +304,7 @@ const diaBaseAssociation = {
   Ẑ: ["Z", ["cr"]],
   Ž: ["Z", ["hc"]],
   Ż: ["Z", ["da"]],
-  Ẓ: ["Z", ["da"]],
+  Ẓ: ["Z", ["db"]],
   Ẕ: ["Z", ["lb"]],
   Ȥ: ["Z", ["hbr"]],
   Ǯ: ["Ʒ", ["hc"]],
