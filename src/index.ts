@@ -7,7 +7,8 @@ import currency from "./currency";
 
 /*
  * Destructure every glyphs groups to compose the font
- * To go deeper on the font sructure please refer to type.d.ts
+ * To go deeper on this font sructure please refer to 
+ * {@link https://github.com/nclslbrn/plotWriter/blob/main/src/type.d.ts}
  */
 const font = {
   ...lowercase,
@@ -18,7 +19,7 @@ const font = {
 } as Font;
 
 /**
- * A function to move and scale each glyph vertex/point/Vec coordinate
+ * A function to move and scale each glyph vertex/point/Vec coordinates
  */
 const scaleAndMove = (v: Vec, size: Vec, pos: Vec): Vec => [
   pos[0] + v[0] * size[0],
