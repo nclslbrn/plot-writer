@@ -1,19 +1,19 @@
 import { type Vec, Line, Glyph, Font } from "./type";
 import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
-import ponctuation from "./punctuation";
+import punctuation from "./punctuation";
 import number from "./number";
 import currency from "./currency";
 
 /*
- * Destructure every glyphs groups and assign glyph key to theirs paths
- * font.a = [[[x1, y1], [x2, y2]...]]
+ * Destructure every glyphs groups to compose the font
+ * To go deeper on the font sructure please refer to type.d.ts
  */
 const font = {
   ...lowercase,
   ...uppercase,
   ...number,
-  ...ponctuation,
+  ...punctuation,
   ...currency,
 } as Font;
 
@@ -60,7 +60,7 @@ const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
     );
   } else {
     console.warn(
-      `Missing glyph ${key}, You can create it (and add it to this repository by making a pull request) or open an issue.`,
+      `Missing glyph "${key}" You can create it (and add it to this repository by making a pull request) or open an issue.`,
     );
     return [];
   }
