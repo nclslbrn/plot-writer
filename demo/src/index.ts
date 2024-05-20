@@ -1,37 +1,7 @@
 import { font, getGlyphPath } from "../../src/index.ts";
-import { Glyph, Line, Vec } from "../../src/type";
 import letters from "./letters";
 
 const DEBUG = true;
-
-const rotateGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [1 - p[0], 1 - p[1]]));
-const upscaleGlyph = (g: Glyph) =>
-  g.map((l: Line) =>
-    l.map((p: Vec) => [p[0] * 1.33 - 0.166, p[1] * 1.33 - 0.33]),
-  );
-
-const scaleGlyph = (g: Glyph) =>
-  g.map((l: Line) =>
-    l.map((p: Vec) => [0.166 + p[0] * 0.66, 0.166 + p[1] * 0.66]),
-  );
-const mirrorXGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [p[0], 1 - p[1]]));
-const mirrorYGlyph = (g: Glyph) =>
-  g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
-
-// alert(`ɐ: ${JSON.stringify(mirrorXGlyph(font["S"]))},`);
-
-const fontFamily =
-  'ui-monospace, Menlo, Monaco,"Cascadia Mono", "Segoe UI Mono", "Roboto Mono","Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;';
-for (let l = 0; l < letters.length; l++) {
-  if (font[letters[l]] === undefined) {
-    console.log(`%c ${letters[l]}`, `${fontFamily} font-size: 3em`);
-    break;
-  } else {
-    console.log(`%c ✅${letters[l]}`, `${fontFamily} font-size: 2.5em`);
-  }
-}
 
 const app = document.getElementById("app"),
   form = document.createElement("form"),
@@ -96,7 +66,7 @@ const update = () => {
       group.appendChild(rect);
     }
   }
-  group.setAttribute("stroke-width", `${fontScale * 30}`);
+  group.setAttribute("stroke-width", `${fontScale * 40}`);
 
   svg.setAttribute("width", `${width}`);
   svg.setAttribute("height", `${height + 40}`);
