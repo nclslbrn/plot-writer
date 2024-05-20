@@ -3,8 +3,6 @@ import { type Font } from "../type";
 /*
  * Base alphabet
  */
-
-// const base =
 const base = {
   a: [
     [

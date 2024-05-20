@@ -20,7 +20,7 @@ const mirrorXGlyph = (g: Glyph) =>
 const mirrorYGlyph = (g: Glyph) =>
   g.map((l: Line) => l.map((p: Vec) => [1 - p[0], p[1]]));
 
-//alert(`ɐ: ${JSON.stringify(rotateGlyph(font["a"]))},`);
+// alert(`ɐ: ${JSON.stringify(mirrorXGlyph(font["S"]))},`);
 
 const fontFamily =
   'ui-monospace, Menlo, Monaco,"Cascadia Mono", "Segoe UI Mono", "Roboto Mono","Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;';
