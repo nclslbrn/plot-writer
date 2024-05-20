@@ -1,4 +1,6 @@
-const currency = {
+import { type Font } from "./type"; 
+
+export default {
   "¢": [
     [
       [0.725, 0.35],
@@ -85,6 +87,4 @@ const currency = {
       [0.55, 0.5],
     ],
   ],
-};
-
-export default currency;
+} as Font;

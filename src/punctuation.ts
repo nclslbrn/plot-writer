@@ -1,4 +1,6 @@
-const ponctuation = {
+import { type Font } from "./type"; 
+
+export default {
   ".": [
     [
       [0.5, 0.675],
@@ -679,5 +681,4 @@ const ponctuation = {
       [0.7, 0.3],
     ],
   ],
-};
-export default ponctuation;
+} as Font;

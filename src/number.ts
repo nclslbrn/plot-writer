@@ -1,4 +1,6 @@
-const number = {
+import { type Font } from "./type"; 
+
+export default {
   0: [
     [
       [0.15, 0.271],
@@ -110,6 +112,4 @@ const number = {
       [0.15, 0.7],
     ],
   ],
-};
-
-export default number;
+} as Font;

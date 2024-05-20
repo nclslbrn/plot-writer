@@ -1,7 +1,7 @@
 import { type Vec, Line, Glyph, Font } from "./type";
 import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
-import ponctuation from "./poncuation";
+import ponctuation from "./punctuation";
 import number from "./number";
 import currency from "./currency";
 
