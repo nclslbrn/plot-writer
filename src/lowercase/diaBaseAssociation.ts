@@ -21,8 +21,8 @@ const diaBaseAssociation = {
   ä: ["a", ["dr"]],
   ǟ: ["a", ["dr", "mc"]],
   ã: ["a", ["tl"]],
-  ȧ: ["a", ["gs"]],
-  ǡ: ["a", ["gs", "mc"]],
+  ȧ: ["a", ["da"]],
+  ǡ: ["a", ["da", "mc"]],
   ą: ["a", ["cdr"]],
   ā: ["a", ["mc"]],
   ả: ["a", ["ha"]],
@@ -31,7 +31,7 @@ const diaBaseAssociation = {
   ạ: ["a", ["db"]],
   ặ: ["a", ["br", "db"]],
   ậ: ["a", ["cr", "db"]],
-  ḁ: ["a", ["db"]],
+  ḁ: ["a", ["gsb"]],
   ǽ: ["æ", ["ct"]],
   ǣ: ["æ", ["mc"]],
   ẚ: ["a", ["hcr"]],
@@ -234,8 +234,8 @@ const diaBaseAssociation = {
   ș: ["s", ["cm"]],
   ẛ: ["ſ", ["da"]],
   ʂ: ["s", ["hbl"]],
-  
-  // t 
+
+  // t
   ť: ["t", ["ct"]],
   ẗ: ["t", ["dr"]],
   ṫ: ["t", ["da"]],
@@ -281,8 +281,8 @@ const diaBaseAssociation = {
   // v
   ṽ: ["v", ["tl"]],
   ṿ: ["v", ["db"]],
-  
-  // w 
+
+  // w
   ẃ: ["w", ["ct"]],
   ẁ: ["w", ["gr"]],
   ŵ: ["w", ["cr"]],
@@ -290,11 +290,10 @@ const diaBaseAssociation = {
   ẅ: ["w", ["dr"]],
   ẇ: ["w", ["da"]],
   ẉ: ["w", ["db"]],
-  
+
   // x
   ẍ: ["x", ["dr"]],
   ẋ: ["x", ["da"]],
-
 
   // y
   ý: ["y", ["ct"]],
@@ -308,7 +307,7 @@ const diaBaseAssociation = {
   ỵ: ["y", ["db"]],
   ỷ: ["y", ["ha"]],
 
-  // z 
+  // z
   ź: ["z", ["ct"]],
   ẑ: ["z", ["cr"]],
   ž: ["z", ["hc"]],
@@ -320,7 +319,6 @@ const diaBaseAssociation = {
 
   //ž: ["z", ["hc"]],
   //ž: ["z", ["hc"]],
-
 } as ExtendedTable;
 
 export { diaBaseAssociation };

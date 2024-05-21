@@ -1,13 +1,25 @@
 import { type Vec, Line, Glyph, Font } from "./type";
 import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
-import ponctuation from "./poncuation";
+import punctuation from "./punctuation";
 import number from "./number";
+import currency from "./currency";
 
-const font = { ...lowercase, ...uppercase, ...ponctuation, ...number } as Font;
+/*
+ * Destructure every glyphs groups to compose the font
+ * To go deeper on this font sructure please refer to 
+ * {@link https://github.com/nclslbrn/plotWriter/blob/main/src/type.d.ts}
+ */
+const font = {
+  ...lowercase,
+  ...uppercase,
+  ...number,
+  ...punctuation,
+  ...currency,
+} as Font;
 
 /**
- * A function to move and scale each glyph vertex/point/Vec coordinate
+ * A function to move and scale each glyph vertex/point/Vec coordinates
  */
 const scaleAndMove = (v: Vec, size: Vec, pos: Vec): Vec => [
   pos[0] + v[0] * size[0],
@@ -49,7 +61,7 @@ const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
     );
   } else {
     console.warn(
-      `Missing glyph ${key}, You can create it (and add it to this repository by making a pull request) or open an issue.`,
+      `Missing glyph "${key}" You can create it (and add it to this repository by making a pull request) or open an issue.`,
     );
     return [];
   }
