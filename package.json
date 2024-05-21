@@ -27,8 +27,16 @@
     "demo:build": "tsc && vite build demo/"
   },
   "description": "Write (SVG) text with JavaScript",
-  "repository": "https://github.com/nclslbrn/plotWriter.git",
-  "author": "nclslbrn <nclslbrn@gmail.com>",
+  "keywords": ["SVG text", "PenPlotter", "font-face", "Vector font"],
+  "homepage": "https://github.com/nclslbrn/plotWriter#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nclslbrn/plotWriter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/owner/project/issues",
+  },
+  "author": "nclslbrn",
   "license": "MIT",
   "private": true,
   "devDependencies": {
