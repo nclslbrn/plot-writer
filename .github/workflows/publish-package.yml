@@ -12,9 +12,8 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
-      - run: npm ci
-      - run: npm build
-      - uses: JS-DevTools/npm-publish@v3
-        with:
-          access: public
-          token: ${{ secrets.NPM_TOKEN }}
+      - run: yarn install --immutable
+      - run: yarn build
+      - run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
