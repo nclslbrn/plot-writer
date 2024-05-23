@@ -48,6 +48,6 @@
     "@nclslbrn:registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=16.2"
+    "node": ">=20"
   }
 }
