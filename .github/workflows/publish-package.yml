@@ -12,6 +12,8 @@ jobs:
         with:
           node-version: "20"
           cache: "yarn"
+          registry-url: 'https://registry.npmjs.org'
+          always-auth: true
       - run: yarn install --immutable
       - run: yarn build
       - run: yarn publish
