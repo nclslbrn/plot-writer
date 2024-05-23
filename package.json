@@ -1,6 +1,6 @@
 {
   "name": "@nclslbrn/plot-writer",
-  "version": "0.0.1a",
+  "version": "0.0.2-a",
   "type": "module",
   "main": "./dist/plot-writer.umd.cjs",
   "module": "./dist/plot-writer.js",
