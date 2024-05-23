@@ -1,8 +1,9 @@
 name: Publish on NPM
 on:
-  release:
-    types: [published]
-
+  # release:
+  #  types: [published]
+  workflow_dispatch:
+  
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -17,6 +18,7 @@ jobs:
           always-auth: true
       - run: yarn install --immutable
       - run: yarn build
-      - run: yarn publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: JS-DevTools/npm-publish@v3
+        with:
+          access: public
+          token: ${{ secrets.NPM_TOKEN }}
