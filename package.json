@@ -1,14 +1,14 @@
 {
-  "name": "@nclslbrn/plotWriter",
-  "version": "0.0.1",
+  "name": "@nclslbrn/plot-writer",
+  "version": "0.0.1a",
   "type": "module",
-  "main": "./dist/plotWriter.umd.cjs",
-  "module": "./dist/plotWriter.js",
+  "main": "./dist/plot-writer.umd.cjs",
+  "module": "./dist/plot-writer.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/plotWriter.js",
-      "require": "./dist/plotWriter.umd.cjs",
+      "import": "./dist/plot-writer.js",
+      "require": "./dist/plot-writer.umd.cjs",
       "type": "./dist/index.d.ts"
     }
   },
@@ -27,16 +27,24 @@
     "demo:build": "tsc && vite build demo/"
   },
   "description": "Write (SVG) text with JavaScript",
-  "keywords": ["SVG text", "PenPlotter", "font-face", "Vector font"],
-  "homepage": "https://github.com/nclslbrn/plotWriter#readme",
+  "keywords": [
+    "SVG text",
+    "PenPlotter",
+    "font-face",
+    "Vector font"
+  ],
+  "homepage": "https://github.com/nclslbrn/plot-writer#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nclslbrn/plotWriter.git"
+    "url": "https://github.com/nclslbrn/plot-writer.git"
   },
   "bugs": {
-    "url": "https://github.com/owner/project/issues"
+    "url": "https://github.com/nclslbrn/plot-writer/issues"
   },
-  "author": "nclslbrn",
+  "author": {
+    "name": "nclslbrn",
+    "email": "nclslbrn@gmail.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.12.7",
@@ -45,9 +53,9 @@
     "vite-plugin-dts": "^3.9.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "@nclslbrn:registry": "https://registry.npmjs.org"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=16"
   }
 }

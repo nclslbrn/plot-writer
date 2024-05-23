@@ -7,8 +7,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "plotWriter",
-      fileName: "plotWriter",
+      name: "plot-writer",
+      fileName: "plot-writer",
     },
   },
   plugins: [dts()],

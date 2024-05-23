@@ -1,9 +1,9 @@
-# PlotWriter
+# Plot-writer
 
 A SVG text writer for plotter.
 This library allows you to obtain an SVG plot from text, each glyph drawn with simple lines (no outlines).
 
-![a plot made with PlotWriter](https://raw.githubusercontent.com/nclslbrn/plotWriter/main/plotwriter.jpg)
+![a plot made with PlotWriter](https://raw.githubusercontent.com/nclslbrn/plot-writer/main/plotwriter.jpg)
 
 This library is currently in beta.
 The SVG font will support all characters of the [Latin Extended-A alphabet](https://en.wikipedia.org/wiki/Latin_Extended-A).
