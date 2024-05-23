@@ -39,8 +39,7 @@ const update = () => {
       const char = text[y * charPerLine + x];
       const lines = getGlyphPath(char, textSize, [
         margin[0] + x * textSize[0],
-        margin[1] + y * textSize[1],
-        textSize[1],
+        margin[1] + y * textSize[1]
       ]);
       const rect = document.createElementNS(namespace, "rect");
       rect.setAttribute("x", `${margin[0] + x * textSize[0]}`);

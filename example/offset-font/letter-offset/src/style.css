@@ -1,0 +1,9 @@
+html {
+  overflow: hidden;
+}
+
+svg,
+body {
+  margin: 0;
+  box-sizing: border-box;
+}

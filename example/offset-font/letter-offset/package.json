@@ -1,0 +1,26 @@
+{
+  "name": "letter-offset",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  },
+  "dependencies": {
+    "@nclslbrn/plot-writer": "^0.0.2-a",
+    "@thi.ng/geom": "^7.0.1",
+    "@thi.ng/geom-sdf": "^0.4.1",
+    "@thi.ng/hiccup-canvas": "^3.0.1",
+    "@thi.ng/hiccup-svg": "^5.2.37",
+    "@thi.ng/rdom": "^1.4.0",
+    "@thi.ng/vectors": "^7.10.31",
+    "@types/": "nclslbrn/plot-writer",
+    "mnemonics": "^1.1.3"
+  }
+}
