@@ -13,7 +13,7 @@
     "vite": "^5.2.0"
   },
   "dependencies": {
-    "@nclslbrn/plot-writer": "^0.0.2-a",
+    "@nclslbrn/plot-writer": "^0.0.5-a",
     "@thi.ng/geom": "^7.0.1",
     "@thi.ng/geom-sdf": "^0.4.1",
     "@thi.ng/hiccup-canvas": "^3.0.1",
@@ -22,7 +22,6 @@
     "@thi.ng/random": "^3.8.0",
     "@thi.ng/rdom": "^1.4.0",
     "@thi.ng/vectors": "^7.10.31",
-    "@types/": "nclslbrn/plot-writer",
     "mnemonics": "^1.1.3"
   }
 }

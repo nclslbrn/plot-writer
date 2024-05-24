@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"target": "ES2020",
+		"target": "esnext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
-
+    "declaration": true,
 		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
@@ -19,6 +19,6 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"],
+  "include": ["./src", "index.d.ts", "type.d.ts"],
 	"exclude": ["__tests__/index.ts"]
 }

@@ -11,5 +11,11 @@ export default defineConfig({
       fileName: "plot-writer",
     },
   },
-  plugins: [dts()],
+  plugins: [
+    dts({
+      rollupTypes: true,
+      insertTypesEntry: true,
+      copyDtsFiles: true
+    })
+  ],
 });

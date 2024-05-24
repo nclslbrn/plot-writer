@@ -1,4 +1,4 @@
-import { type Vec, Line, Glyph, Font } from "./type";
+import type { Vec, Line, Glyph, Font } from "./type.d.ts";
 import lowercase from "./lowercase/index";
 import uppercase from "./uppercase/index";
 import punctuation from "./punctuation";
@@ -53,7 +53,7 @@ const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
     return (font[key] as Glyph).map(
       (line: Line) =>
         line.reduce(
-          (com, v, i) =>
+          (com: string, v: Vec, i: number) =>
             (com += `${i === 0 ? "M" : "L"}${scaleAndMove(v, size, pos).join(",")}`),
           "",
         ),
@@ -67,4 +67,5 @@ const getGlyphPath = (key: string, size: Vec, pos: Vec): string[] => {
   }
 };
 
+export type { Vec, Line, Glyph, Font}
 export { font, getGlyphPath, getGlyphVector };

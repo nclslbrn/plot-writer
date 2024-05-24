@@ -117,10 +117,10 @@
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.20.2.tgz#9c907b21e30a52db959ba4f80bb01a0cc403d5cc"
   integrity sha512-N49X4lJX27+l9jbLKSqZ6bKNjzQvHaT8IIFUy+YIqmXQdjYCToGWwOItDrfby14c78aDd5NHQl29xingXfCdLQ==
 
-"@nclslbrn/plot-writer@^0.0.2-a":
-  version "0.0.2-a"
-  resolved "https://registry.npmjs.org/@nclslbrn/plot-writer/-/plot-writer-0.0.2-a.tgz#c1efd808e058919c9e6d684ceb46190f1717de22"
-  integrity sha512-BGvXaCgPFwS5RAG9UftXmbg0+X1Cxf/XlTzUa9QPTd1VwNb7nX5+ziuAlUNgBlanLNz/UBNXKaVhFlaEWNTMnA==
+"@nclslbrn/plot-writer@^0.0.5-a":
+  version "0.0.5-a"
+  resolved "https://registry.npmjs.org/@nclslbrn/plot-writer/-/plot-writer-0.0.5-a.tgz#4ec388ebba660d8037c6730fb5b95de62feb3d27"
+  integrity sha512-2h/9i0k2Azyh7q3xKkM7cppNyaf4hDKCh676xJBA2Sbis74Ev4xSO9MhoHw72IoPQxBffvJfL3bjTXNsnshRMg==
 
 "@noble/hashes@^1.2.0":
   version "1.4.0"
@@ -742,10 +742,6 @@
     "@thi.ng/random" "^3.8.0"
     "@thi.ng/strings" "^3.7.33"
     "@thi.ng/transducers" "^9.0.5"
-
-"@types/@nclslbrn/plot-writer":
-  version "0.0.2-a"
-  resolved "https://codeload.github.com/nclslbrn/plot-writer/tar.gz/779b19ea79e1e05afe586ac059c775033c3b4e54"
 
 "@types/estree@1.0.5":
   version "1.0.5"
