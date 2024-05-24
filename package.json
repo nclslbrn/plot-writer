@@ -1,6 +1,6 @@
 {
   "name": "@nclslbrn/plot-writer",
-  "version": "0.0.2-a",
+  "version": "0.0.3-a",
   "type": "module",
   "main": "./dist/plot-writer.umd.cjs",
   "module": "./dist/plot-writer.js",
@@ -8,7 +8,7 @@
   "exports": {
     ".": {
       "import": {
-        "default" : "./dist/plot-writer.js",
+        "default": "./dist/plot-writer.js",
         "types": "./dist/index.d.ts"
       },
       "require": {
