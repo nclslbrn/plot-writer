@@ -561,6 +561,13 @@
     "@thi.ng/pixel" "^6.1.32"
     "@thi.ng/vectors" "^7.10.31"
 
+"@thi.ng/hiccup-html@^2.6.3":
+  version "2.6.3"
+  resolved "https://registry.npmjs.org/@thi.ng/hiccup-html/-/hiccup-html-2.6.3.tgz#86478045f9b3d74c266271c3261976741fe074d8"
+  integrity sha512-2lEipK6INsMDDmJXHq3iN/+NY91c7i8VwXug3Cczb+H7DihuoRZFrHasKbmCbiNpDseRN9uNScTz+0y8yqLeKw==
+  dependencies:
+    "@thi.ng/api" "^8.11.2"
+
 "@thi.ng/hiccup-svg@^5.2.37":
   version "5.2.37"
   resolved "https://registry.npmjs.org/@thi.ng/hiccup-svg/-/hiccup-svg-5.2.37.tgz#ba993995ed6411182e92dbbfcae664e76afb4c1c"
