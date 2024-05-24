@@ -1,20 +1,15 @@
 {
   "name": "@nclslbrn/plot-writer",
-  "version": "0.0.3-a",
+  "version": "0.0.4-a",
   "type": "module",
   "main": "./dist/plot-writer.umd.cjs",
+  "types": "./dist/plot-writer.d.ts",
   "module": "./dist/plot-writer.js",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "default": "./dist/plot-writer.js",
-        "types": "./dist/index.d.ts"
-      },
-      "require": {
-        "default": "./dist/plot-writer.umd.cjs",
-        "types": "./dist/index.d.ts"
-      }
+      "import": "./dist/plot-writer.js",
+      "require": "./dist/plot-writer.umd.cjs",
+      "type": "./dist/index.d.ts"
     }
   },
   "files": [
@@ -26,7 +21,7 @@
     "dev": "vite",
     "test": "jest",
     "preview": "vite preview",
-    "build": "tsc --project tsconfig.build.json && vite build",
+    "build": "rm -fr dist/* && tsc --project tsconfig.build.json && vite build",
     "deploy": "npm publish",
     "demo:dev": "vite demo/ --host",
     "demo:build": "tsc && vite build demo/"
