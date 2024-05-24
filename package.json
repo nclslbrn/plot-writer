@@ -7,9 +7,14 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/plot-writer.js",
-      "require": "./dist/plot-writer.umd.cjs",
-      "type": "./dist/index.d.ts"
+      "import": {
+        "default" : "./dist/plot-writer.js",
+        "types": "./dist/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/plot-writer.umd.cjs",
+        "types": "./dist/index.d.ts"
+      }
     }
   },
   "files": [
