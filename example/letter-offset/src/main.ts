@@ -13,11 +13,12 @@ import { button, canvas, div } from "@thi.ng/hiccup-html";
 import { clipPolylinePoly } from "@thi.ng/geom-clip-line";
 
 const RES = [256, 256], // A resolution to sample the letters composition
+  THEME = ["steelblue", "tomato", "LimeGreen", "gold", "indigo"],
   T = [
     ..."0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnpqrstuvwxyz.?,:!^=+/\\~#",
   ]; // An array of possible char used in the composition
 
-// We need these two elements: 
+// We need these two elements:
 // `comp` to reuse the composition to export an SVG
 // `cnvs` (the canvas element) to export a JPG
 let comp = group(),
@@ -60,13 +61,13 @@ const init = () => {
       // ]
       const letterLines = getGlyphVector(
         // This function can be use with only one char
-        char, 
+        char,
         // Fonts are designed in square of 0->1, you can adapt the ratio here
         [size, size * 1.4],
         // You can also add a position [x, y] or move the points obtained later [0, 0].
-        pos.map((d) => d - size / 2), 
+        pos.map((d) => d - size / 2),
       );
-      // Since a letter can contains multiple lines and we want a flat array, 
+      // Since a letter can contains multiple lines and we want a flat array,
       // we use spread syntax and Array.reduce() to concatenate previous letter strokes with new ones
       return [...polys, ...letterLines.map((line: Vec[]) => polyline(line))];
     }, [] as Polyline[]),
@@ -80,27 +81,35 @@ const init = () => {
       image,
       rect(...crop),
       RES,
-      range(diag * 0.002, diag, diag * 0.004),
+      range(diag * 0.003, diag, diag * 0.005),
       0.5,
     ),
-    comp = group({}, [
-      group({}, [rect(frame, { fill: "#121010" })]),
-      group({ stroke: "#fefcfa", weight: 1 }, contours), 
-      group(
-        { stroke: "tomato", weight: diag * 0.002 },
-        // since letter can be larger than sdf, cut lines if they go outside
-        lines.reduce(
-          (crp: Polyline[], l: Polyline) => [
-            ...crp,
-            // Usefull function from @thi.ng/geom-clip-line,
-            // It removes all parts of line which are outside a polygon 
-            // https://github.com/thi-ng/umbrella/tree/7d3339310c56ac7fd3572fb3487b6f34f1de57ca/packages/geom-clip-line#api
-            ...clipPolylinePoly(l.points, cropPoly).map((pts) => polyline(pts)),
-          ],
-          [],
-        ),
+    weight = diag * 0.0015;
+  comp = group({}, [
+    group({}, [rect(frame, { fill: "#121010" })]),
+    group({ stroke: "#f3f6fa", weight }, contours),
+    group(
+      {
+        // fix a discrepancy whose origin I do not know
+        translate: [weight, weight],
+        lineJoin: "round",
+        lineCap: "round",
+        stroke: pickRandom(THEME),
+        weight,
+      },
+      // since letter can be larger than sdf, cut lines if they go outside
+      lines.reduce(
+        (crp: Polyline[], l: Polyline) => [
+          ...crp,
+          // Usefull function from @thi.ng/geom-clip-line,
+          // It removes all parts of line which are outside a polygon
+          // https://github.com/thi-ng/umbrella/tree/7d3339310c56ac7fd3572fb3487b6f34f1de57ca/packages/geom-clip-line#api
+          ...clipPolylinePoly(l.points, cropPoly).map((pts) => polyline(pts)),
+        ],
+        [],
       ),
-    ]);
+    ),
+  ]);
 
   cnvs!.width = frame[0];
   cnvs!.height = frame[1];
