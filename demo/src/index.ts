@@ -1,6 +1,6 @@
 import { font, getGlyphPath } from "../../src/index.ts";
 import letters from "./letters";
-import { trueFalseCheckbox, inputRange, textarea } from "./param.ts";
+import { trueFalseCheckbox, inputRange, textarea, button } from "./field.ts";
 import { togglablePanel } from "./panel.ts";
 
 const app = document.getElementById("app"),
@@ -11,7 +11,7 @@ const app = document.getElementById("app"),
   textAtLaunch = "Type text",
   settings = {
     Size: 0.1,
-    Debug: true,
+    Debug: false,
     Text: textAtLaunch,
   },
   fontKey = Array.from(Object.keys(font)),
@@ -25,6 +25,7 @@ const init = () => {
   group.setAttribute("stroke-linejoin", "round");
   group.setAttribute("stroke-linecap", "round");
   group.setAttribute("fill", "rgba(0, 0, 0, 0)");
+  group.setAttribute("fill-opacity", "0");
 
   svg.appendChild(group);
   app.appendChild(header);
@@ -42,9 +43,26 @@ const init = () => {
     0.01,
   );
   trueFalseCheckbox("Debug", settings.Debug, settingsPanel, updateSettings);
-
+  button("Download SVG", settingsPanel, download);
   app.appendChild(svg);
   render();
+};
+
+const download = () => {
+  let svgFile = "";
+  const svgMarkup = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        ${svg.outerHTML}`;
+  const data = new Blob([svgMarkup], {
+    type: "application/xml",
+  });
+  if (svgFile !== null) {
+    window.URL.revokeObjectURL(svgFile);
+  }
+  svgFile = window.URL.createObjectURL(data);
+  const link = document.createElement("a");
+  link.href = svgFile;
+  link.download = `plot-writer${new Date().toISOString()}.svg`;
+  link.click();
 };
 
 const render = () => {

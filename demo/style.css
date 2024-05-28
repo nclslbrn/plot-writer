@@ -60,7 +60,8 @@ footer {
 }
 
 #app .panel {
-  display: block;
+  display: flex;
+  flex-flow: column wrap;
   padding-top: 2em;
   padding-bottom: 2em;
   max-height: 25vh;

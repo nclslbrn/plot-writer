@@ -44,9 +44,10 @@ const inputRange = (
   const label = document.createElement("label");
   label.innerText = name;
 
-  field.addEventListener("change", () =>
-    onchange(name, parseFloat(field.value)),
-  );
+  field.addEventListener("change", () => {
+    label.innerText = name + " " + parseFloat(field.value).toFixed(3);
+    onchange(name, parseFloat(field.value));
+  });
   parent.appendChild(label);
   parent.appendChild(field);
 };
@@ -64,4 +65,14 @@ const textarea = (
   parent.appendChild(field);
 };
 
-export { trueFalseCheckbox, inputRange, textarea };
+const button = (name: string, parent: HTMLElement, onchange: OnChange) => {
+  const button = document.createElement("button");
+  button.innerText = name;
+  button.addEventListener("click", (e: MouseEvent) => {
+    e.preventDefault();
+    onchange(name, "click");
+  });
+  parent.appendChild(button);
+};
+
+export { trueFalseCheckbox, inputRange, textarea, button };
