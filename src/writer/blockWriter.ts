@@ -48,7 +48,7 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
           }
           // end line (create new line)
           else if (
-            x + 6 > charsPerLine &&
+            x + 7 > charsPerLine &&
             j < letters.length - 1 &&
             !isConsonant(l) &&
             isConsonant(letters[j + 1])
@@ -136,22 +136,29 @@ const getParagraphPath = (
   text: string,
   charsPerLine: number,
   hyphenFrom: number,
-  textWidth: number
-): string[] => {
+  textWidth: number,
+  spacing = [1, 1]
+): { paths: string[]; height: number } => {
   const grid = charArray(text, charsPerLine, hyphenFrom);
   const textSize = [textWidth / charsPerLine, (textWidth / charsPerLine) * 1.4];
-  return grid.reduce(
+  const invSpacing = [(1 / spacing[0]) * textSize[0], (1 / spacing[1]) * textSize[1]];
+  const paths = grid.reduce(
     (out: string[], row: Array<Char>, y: number) =>
       [
         ...out,
         ...row
           .map((l: Char, x: number) => {
-            return l !== ' ' ? getGlyphPath(l, textSize, [x * textSize[0], y * textSize[1]]) : [];
+            return l !== ' '
+              ? // Instead of alter the position we change the glyph size
+                // to prevent line width change
+                getGlyphPath(l, invSpacing, [x * textSize[0], y * textSize[1]])
+              : [];
           })
           .flat(),
       ] as string[],
     [] as string[]
   );
+  return { paths, height: textSize[1] * grid.length };
 };
 
 export { charArray, getParagraphVector, getParagraphPath };

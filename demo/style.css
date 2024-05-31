@@ -42,7 +42,7 @@ footer {
 #app header {
   position: relative;
   justify-content: space-between;
-  background: linear-gradient(to bottom, #ffffff, #d9d6d6);
+  background: linear-gradient(to bottom, #333, #111);
   width: 100%;
 }
 
@@ -61,15 +61,18 @@ footer {
 
 #app .panel {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: row wrap;
   padding-top: 2em;
-  padding-bottom: 2em;
-  max-height: 25vh;
-  transform: translateY(-25vh);
+  padding-bottom: 0.5em;
+  max-height: 50vh;
+  transform: translateY(-50vh);
   overflow-y: hidden;
   height: 0;
+  border: 1px solid #b0b0b0;
   background: #eeeeee;
+  background: linear-gradient(to bottom, #c3c3c3, #f1f1f1);
   transition: transform 0.5 ease-in-out;
+  overflow-y: auto;
 }
 
 #app .panel.open {
@@ -82,34 +85,63 @@ footer p {
   text-align: center;
 }
 
-#app header svg,
-#app header button {
+#app .panel fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  flex: 100%;
+  max-width: 100%;
+}
+
+#app .panel fieldset label,
+#app .panel fieldset input,
+#app .panel button {
   display: block;
-  padding: 2px 4px;
-  border: none;
+  width: 90%;
+  margin: 1em 5% 2em 5%;
+  text-align: center;
+}
+
+#app .panel button {
+  padding: 1em 0;
+}
+
+@media only screen and (min-width: 960px) {
+  #app .panel fieldset {
+    flex: 33.33%;
+    max-width: 33%;
+  }
 }
 
 #app header svg {
   width: 80%;
   padding-left: 2em;
-  max-height: 40px;
+  max-height: 48px;
 
   fill: #00000000;
-  stroke: #000;
+  stroke: #ccc;
   stroke-width: 0.1vw;
 }
 
 #app header button {
-  width: 20%;
-  padding-right: 2em;
-  background: #fefefe;
+  margin: 8px;
+  width: 38px;
+}
+
+#app button {
+  border: 1px solid #ccc;
+  background: #000;
+  color: #fff;
 }
 
 #app header button:hover {
-  background: royalblue;
+  color: royalblue;
+  border-color: royalblue;
 }
+
 #app header button:focus {
-  background: steelblue;
+  color: steelblue;
+  border-color: steelblue;
 }
 
 #app svg {
@@ -136,12 +168,13 @@ footer p {
   stroke-width: 0;
 }
 
-@media screen and (min-width: 900px) {
-  #app header textarea {
-    display: block;
-    font-size: 1.4em;
-    padding: 0.4em;
-  }
+#app .panel > textarea {
+  display: block;
+  position: relative;
+  width: 100%;
+  font-size: 1.4em;
+  padding: 0.4em;
+  height: 200px;
 }
 
 footer {

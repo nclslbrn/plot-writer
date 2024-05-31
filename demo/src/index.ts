@@ -1,23 +1,22 @@
 import { type Char, getGlyphPath, getParagraphPath } from '../../src/index.ts';
-import { trueFalseCheckbox, inputRange, textarea, button } from './field.ts';
+import { inputRange, textarea, button } from './field.ts';
 import { togglablePanel } from './panel.ts';
 import { name, version } from '../../package.json';
 import quotes from './quotes.ts';
 
 const app = document.getElementById('app'),
   header = document.createElement('header'),
-  [settingsPanel, openSettingsPanel] = togglablePanel(false, 'settings'),
+  [settingsPanel, openSettingsPanel] = togglablePanel(false, '☰', '✖'),
   namespace = 'http://www.w3.org/2000/svg',
   svg = document.createElementNS(namespace, 'svg'),
   settings = {
     Text: quotes[Math.floor(Math.random() * quotes.length)],
-    'Char per line': 32,
-    'Letter spacing': 0.8,
-    'Line spacing': 0.8,
+    'Letters per line': 60,
+    'Letter spacing': 1,
+    'Line spacing': 0.92,
   },
   group = document.createElementNS(namespace, 'g');
 
-console.log(settings.Text);
 const pathFromD = (d: string): SVGPathElement => {
   const path = document.createElementNS(namespace, 'path');
   path.setAttribute('d', d);
@@ -26,17 +25,16 @@ const pathFromD = (d: string): SVGPathElement => {
 
 const init = () => {
   if (app === null) return;
-
   app.appendChild(header);
   app.appendChild(settingsPanel);
 
   const svgLogo = svg.cloneNode(true),
-    logoGlyphSize = [window.innerWidth / 46, 40],
+    logoGlyphSize = [window.innerWidth / 100, 48],
     logoText = `${name.replace('@nclslbrn/', '')}: ${version}`;
 
   ([...logoText] as Array<Char>).forEach((l: Char, x: number) => {
-    // prevent empty space
     if (l !== ' ') {
+      // prevent empty space
       const line = getGlyphPath(l, logoGlyphSize, [x * logoGlyphSize[0], 0]);
       line.forEach((d: string) => svgLogo.appendChild(pathFromD(d)));
     }
@@ -45,14 +43,22 @@ const init = () => {
   header.appendChild(openSettingsPanel);
 
   textarea('Text', settings.Text, settingsPanel, updateSettings);
-  inputRange('Char per line', settings['Char per line'], settingsPanel, updateSettings, 12, 120, 1);
+  inputRange(
+    'Letters per line',
+    settings['Letters per line'],
+    settingsPanel,
+    updateSettings,
+    12,
+    120,
+    1
+  );
   inputRange(
     'Letter spacing',
     settings['Letter spacing'],
     settingsPanel,
     updateSettings,
-    0.6,
-    1.2,
+    0.7,
+    1.4,
     0.01
   );
   inputRange(
@@ -60,8 +66,8 @@ const init = () => {
     settings['Line spacing'],
     settingsPanel,
     updateSettings,
-    0.7,
-    1.3,
+    0.5,
+    1.4,
     0.01
   );
   button('Download SVG', settingsPanel, download);
@@ -74,6 +80,9 @@ const init = () => {
   svg.appendChild(group);
   app.appendChild(svg);
   render();
+  window.onresize = () => {
+    setTimeout(render, 600);
+  };
 };
 
 const download = () => {
@@ -99,14 +108,19 @@ const render = () => {
     width = window.innerWidth - 40;
 
   group.textContent = '';
-  getParagraphPath(userInput, settings['Char per line'], 5, width).forEach((d: string) => {
+  const textBlock = getParagraphPath(userInput, settings['Letters per line'], 5, width, [
+    settings['Letter spacing'],
+    settings['Line spacing'],
+  ]);
+  textBlock.paths.forEach((d: string) => {
     const path = document.createElementNS(namespace, 'path');
     path.setAttribute('d', d);
     group.appendChild(path);
   });
-  group.setAttribute('stroke-width', '2');
+
+  //group.setAttribute('stroke-width', width < 800 ? '0.5' : '2');
   svg.setAttribute('width', `${width}`);
-  svg.setAttribute('height', `${height + 40}`);
+  svg.setAttribute('height', `${textBlock.height + 40}`);
   svg.setAttribute('viewbox', `0 0 ${width} ${height + 40}`);
 };
 

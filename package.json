@@ -48,10 +48,10 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
-    "prettier": "^3.2.5",
-    "eslint-plugin-prettier": "^5.1.3",
     "vite-plugin-dts": "^3.9.0"
   },
   "publishConfig": {
@@ -60,6 +60,5 @@
   "engines": {
     "node": ">=16"
   },
-  "dependencies": {
-  }
+  "packageManager": "yarn@4.2.2"
 }
