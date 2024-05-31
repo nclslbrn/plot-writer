@@ -11,7 +11,7 @@ const app = document.getElementById('app'),
   svg = document.createElementNS(namespace, 'svg'),
   settings = {
     Text: quotes[Math.floor(Math.random() * quotes.length)],
-    'Letters per line': 60,
+    'Letters per line': 30,
     'Letter spacing': 1,
     'Line spacing': 0.92,
   },
