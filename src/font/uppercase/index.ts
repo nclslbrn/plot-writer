@@ -1,17 +1,17 @@
-import { Font, Glyph, DiaGroup } from "../type";
-import { base } from "./base";
-import { diaBaseAssociation } from "./diaBaseAssociation";
-import { mergeDiacritics } from "../diacritics/mergeDiacritics";
-import diacritics from "../diacritics/glyphs";
-import { topDia } from "../diacritics/utility";
+import { Font, Glyph, DiaGroup } from '../../type';
+import { base } from './base';
+import { diaBaseAssociation } from './diaBaseAssociation';
+import { mergeDiacritics } from '../diacritics/mergeDiacritics';
+import diacritics from '../diacritics/glyphs';
+import { topDia } from '../diacritics/utility';
 
 // Move all diacritics above the letter a little higher up
-const upperDia = {} as Font
-Object.keys(diacritics).forEach((g: keyof Font) => { 
-  upperDia[g] = [...topDia, 'brd'].includes(g) 
+const upperDia = {} as Font;
+Object.keys(diacritics).forEach((g: keyof Font) => {
+  upperDia[g] = [...topDia, 'brd'].includes(g)
     ? diacritics[g].map((l) => l.map((p) => [p[0], p[1] - 0.14]))
-    : diacritics[g]
-})
+    : diacritics[g];
+});
 // Clone exisiting glyph and add diacritical marks
 const diacriticized = {} as Font;
 Object.keys(diaBaseAssociation).map((char) => {

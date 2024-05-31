@@ -1,4 +1,4 @@
-import type { Font } from "../type";
+import type { Font } from '../../type';
 /*
  * Create diacritic to create latin extended
  * @url https://en.wikipedia.org/wiki/Latin_Extended_Additional
@@ -34,7 +34,7 @@ const diacritics = {
       [0.6, 0.807],
     ],
   ],
-  // diaeresis 
+  // diaeresis
   dr: [
     [
       [0.4, 0.171],
@@ -83,7 +83,7 @@ const diacritics = {
       [0.6, 0.171],
     ],
   ],
-  // breve bottom 
+  // breve bottom
   brb: [
     [
       [0.4, 0.771],
@@ -145,7 +145,7 @@ const diacritics = {
       [0.45, 0.843],
     ],
   ],
-  // cedilla 
+  // cedilla
   cd: [
     [
       [0.5, 0.7],
@@ -208,7 +208,7 @@ const diacritics = {
       [0.7, 0.843],
     ],
   ],
- // hook bottom left
+  // hook bottom left
   hbl: [
     [
       [0.15, 0.7],
@@ -224,7 +224,7 @@ const diacritics = {
       [0.7, 0.771],
     ],
   ],
-  // horm 
+  // horm
   hr: [
     [
       [0.85, 0.486],

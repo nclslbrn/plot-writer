@@ -1,5 +1,8 @@
-import { type Font } from "./type"; 
+import { type Font } from './../type';
 
+/**
+ * An object of number glyph
+ */
 export default {
   0: [
     [

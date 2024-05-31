@@ -1,8 +1,8 @@
-import { Font, Glyph, DiaGroup } from "../type";
-import { base } from "./base";
-import { diaBaseAssociation } from "./diaBaseAssociation";
-import { mergeDiacritics } from "../diacritics/mergeDiacritics";
-import diacritics from "../diacritics/glyphs"
+import { Font, Glyph, DiaGroup } from '../../type';
+import { base } from './base';
+import { diaBaseAssociation } from './diaBaseAssociation';
+import { mergeDiacritics } from '../diacritics/mergeDiacritics';
+import diacritics from '../diacritics/glyphs';
 
 // Clone exisiting glyph and add diacritical marks
 const diacriticized = {} as Font;
@@ -13,7 +13,7 @@ Object.keys(diaBaseAssociation).map((char) => {
   ] as Glyph;
 });
 
-// Merge all glyphs (with and without diacritical marks)
+// Merge all lowercase glyphs (with and without diacritical marks)
 const lowercase = {
   ...base,
   ...diacriticized,

@@ -1,7 +1,7 @@
-import { type Font } from "../type";
+import { type Font } from '../../type';
 
-/*
- * Base alphabet
+/**
+ * Base lowercase alphabet
  */
 const base = {
   a: [

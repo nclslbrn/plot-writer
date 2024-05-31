@@ -1,4 +1,14 @@
-import { type Font } from "../type";
+import { type Font } from '../../type';
+
+/*
+ * Associate diacritics with existing uppercase glyph
+ *
+ * Each key is used to define a diacritical glyph.
+ * The first element represent the base glypĥ and the
+ * last element of the array is an array of diacritics
+ * (key of {@link https://github.com/nclslbrn/plot-writer/blob/main/src/font/diacritics/glyphs.ts})
+ * to merge with the letter to compose the glyph
+ */
 
 const base = {
   A: [

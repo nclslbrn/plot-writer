@@ -1,129 +1,113 @@
-import { font, getGlyphPath } from "../../src/index.ts";
-import letters from "./letters";
-import { trueFalseCheckbox, inputRange, textarea, button } from "./field.ts";
-import { togglablePanel } from "./panel.ts";
+import { type Char, getGlyphPath, getParagraphPath } from '../../src/index.ts';
+import { trueFalseCheckbox, inputRange, textarea, button } from './field.ts';
+import { togglablePanel } from './panel.ts';
+import { name, version } from '../../package.json';
+import quotes from './quotes.ts';
 
-const app = document.getElementById("app"),
-  header = document.createElement("header"),
-  [settingsPanel, openSettingsPanel] = togglablePanel(false, "settings"),
-  namespace = "http://www.w3.org/2000/svg",
-  svg = document.createElementNS(namespace, "svg"),
-  textAtLaunch = "Type text",
+const app = document.getElementById('app'),
+  header = document.createElement('header'),
+  [settingsPanel, openSettingsPanel] = togglablePanel(false, 'settings'),
+  namespace = 'http://www.w3.org/2000/svg',
+  svg = document.createElementNS(namespace, 'svg'),
   settings = {
-    Size: 0.1,
-    Debug: false,
-    Text: textAtLaunch,
+    Text: quotes[Math.floor(Math.random() * quotes.length)],
+    'Char per line': 32,
+    'Letter spacing': 0.8,
+    'Line spacing': 0.8,
   },
-  fontKey = Array.from(Object.keys(font)),
-  glyphKeys = letters.filter((l) => fontKey.includes(l)).join(""),
-  group = document.createElementNS(namespace, "g");
+  group = document.createElementNS(namespace, 'g');
+
+console.log(settings.Text);
+const pathFromD = (d: string): SVGPathElement => {
+  const path = document.createElementNS(namespace, 'path');
+  path.setAttribute('d', d);
+  return path;
+};
 
 const init = () => {
   if (app === null) return;
 
-  group.setAttribute("stroke", "#333");
-  group.setAttribute("stroke-linejoin", "round");
-  group.setAttribute("stroke-linecap", "round");
-  group.setAttribute("fill", "rgba(0, 0, 0, 0)");
-  group.setAttribute("fill-opacity", "0");
-
-  svg.appendChild(group);
   app.appendChild(header);
   app.appendChild(settingsPanel);
 
-  textarea("Text", settings.Text, header, updateSettings);
+  const svgLogo = svg.cloneNode(true),
+    logoGlyphSize = [window.innerWidth / 46, 40],
+    logoText = `${name.replace('@nclslbrn/', '')}: ${version}`;
+
+  ([...logoText] as Array<Char>).forEach((l: Char, x: number) => {
+    // prevent empty space
+    if (l !== ' ') {
+      const line = getGlyphPath(l, logoGlyphSize, [x * logoGlyphSize[0], 0]);
+      line.forEach((d: string) => svgLogo.appendChild(pathFromD(d)));
+    }
+  });
+  header.appendChild(svgLogo);
   header.appendChild(openSettingsPanel);
+
+  textarea('Text', settings.Text, settingsPanel, updateSettings);
+  inputRange('Char per line', settings['Char per line'], settingsPanel, updateSettings, 12, 120, 1);
   inputRange(
-    "Size",
-    settings.Size,
+    'Letter spacing',
+    settings['Letter spacing'],
     settingsPanel,
     updateSettings,
-    0.01,
-    0.2,
-    0.01,
+    0.6,
+    1.2,
+    0.01
   );
-  trueFalseCheckbox("Debug", settings.Debug, settingsPanel, updateSettings);
-  button("Download SVG", settingsPanel, download);
+  inputRange(
+    'Line spacing',
+    settings['Line spacing'],
+    settingsPanel,
+    updateSettings,
+    0.7,
+    1.3,
+    0.01
+  );
+  button('Download SVG', settingsPanel, download);
+
+  group.setAttribute('stroke', '#333');
+  group.setAttribute('stroke-linejoin', 'round');
+  group.setAttribute('stroke-linecap', 'round');
+  group.setAttribute('fill', 'rgba(0, 0, 0, 0)');
+  group.setAttribute('fill-opacity', '0');
+  svg.appendChild(group);
   app.appendChild(svg);
   render();
 };
 
 const download = () => {
-  let svgFile = "";
+  let svgFile = '';
   const svgMarkup = `<?xml version="1.0" encoding="UTF-8" standalone="no"?>
         ${svg.outerHTML}`;
   const data = new Blob([svgMarkup], {
-    type: "application/xml",
+    type: 'image/svg+xml',
   });
   if (svgFile !== null) {
     window.URL.revokeObjectURL(svgFile);
   }
   svgFile = window.URL.createObjectURL(data);
-  const link = document.createElement("a");
+  const link = document.createElement('a');
   link.href = svgFile;
-  link.download = `plot-writer${new Date().toISOString()}.svg`;
+  link.download = `plot-writer-${new Date().toISOString()}.svg`;
   link.click();
 };
 
 const render = () => {
   let height = window.innerHeight;
-  const userInput = settings.Text !== textAtLaunch ? settings.Text : glyphKeys,
-    text = userInput.split("") as string[],
-    width = window.innerWidth - 40,
-    baseSize = Math.max(
-      16,
-      Math.min(Math.floor(Math.hypot(width, height) * settings.Size), 264),
-    ),
-    textSize = [baseSize, baseSize * 1.6],
-    charPerLine = Math.floor(width / textSize[0]),
-    nbLines = Math.ceil(text.length / charPerLine),
-    margin = [(width - charPerLine * textSize[0]) / 2, 40];
+  const userInput = settings.Text,
+    width = window.innerWidth - 40;
 
-  group.textContent = "";
-
-  for (let y = 0; y < nbLines; y++) {
-    const remainingChar = Math.min(charPerLine, text.length - y * charPerLine);
-    if ((y + 1) * textSize[1] >= height - margin[1])
-      height += textSize[1] + margin[1];
-
-    for (let x = 0; x < remainingChar; x++) {
-      const char = text[y * charPerLine + x];
-      if (char === " ") continue;
-
-      const lines = getGlyphPath(char, textSize, [
-        margin[0] + x * textSize[0],
-        margin[1] + y * textSize[1],
-      ]);
-
-      if (settings.Debug) {
-        const rect = document.createElementNS(namespace, "rect");
-        rect.setAttribute("x", `${margin[0] + x * textSize[0]}`);
-        rect.setAttribute("y", `${margin[1] + y * textSize[1]}`);
-        rect.setAttribute("width", `${textSize[0]}`);
-        rect.setAttribute("height", `${textSize[1]}`);
-        rect.setAttribute("title", char);
-        group.appendChild(rect);
-
-        const label = document.createElementNS(namespace, "text");
-        label.setAttribute("x", `${margin[0] + x * textSize[0] + 10}`);
-        label.setAttribute("y", `${margin[1] + y * textSize[1] + 20}`);
-        label.setAttribute("font-size", `${settings.Size * 15}em`);
-        label.textContent = char;
-        group.appendChild(label);
-      }
-
-      lines.map((d: string) => {
-        const path = document.createElementNS(namespace, "path");
-        path.setAttribute("d", d);
-        group.appendChild(path);
-      });
-    }
-  }
-  group.setAttribute("stroke-width", `${settings.Size * 30}`);
-
-  svg.setAttribute("width", `${width}`);
-  svg.setAttribute("height", `${height + 40}`);
-  svg.setAttribute("viewbox", `0 0 ${width} ${height + 40}`);
+  group.textContent = '';
+  getParagraphPath(userInput, settings['Char per line'], 5, width).forEach((d: string) => {
+    const path = document.createElementNS(namespace, 'path');
+    path.setAttribute('d', d);
+    group.appendChild(path);
+  });
+  group.setAttribute('stroke-width', '2');
+  svg.setAttribute('width', `${width}`);
+  svg.setAttribute('height', `${height + 40}`);
+  svg.setAttribute('viewbox', `0 0 ${width} ${height + 40}`);
 };
 
 const updateSettings = (propName: any, propValue: any) => {

@@ -1,20 +1,15 @@
 export type OnChange = (name: string, val: boolean | string | number) => void;
 
-const trueFalseCheckbox = (
-  name: string,
-  val: boolean,
-  parent: HTMLElement,
-  onchange: OnChange,
-) => {
-  const field = document.createElement("input");
-  field.type = "checkbox";
+const trueFalseCheckbox = (name: string, val: boolean, parent: HTMLElement, onchange: OnChange) => {
+  const field = document.createElement('input');
+  field.type = 'checkbox';
 
   if (val) field.checked = true;
 
-  const label = document.createElement("label");
+  const label = document.createElement('label');
   label.innerText = name;
 
-  field.addEventListener("change", () => {
+  field.addEventListener('change', () => {
     if (field.checked) {
       onchange(name, true);
     } else {
@@ -32,45 +27,40 @@ const inputRange = (
   onchange: OnChange,
   min?: number,
   max?: number,
-  step?: number,
+  step?: number
 ) => {
-  const field = document.createElement("input");
-  field.type = "range";
+  const field = document.createElement('input');
+  field.type = 'range';
   field.value = `${val}`;
   if (min) field.min = `${min}`;
   if (max) field.max = `${max}`;
   if (step) field.step = `${step}`;
 
-  const label = document.createElement("label");
+  const label = document.createElement('label');
   label.innerText = name;
 
-  field.addEventListener("change", () => {
-    label.innerText = name + " " + parseFloat(field.value).toFixed(3);
+  field.addEventListener('change', () => {
+    label.innerText = name + ' ' + field.value;
     onchange(name, parseFloat(field.value));
   });
   parent.appendChild(label);
   parent.appendChild(field);
 };
 
-const textarea = (
-  name: string,
-  val: string,
-  parent: HTMLElement,
-  onchange: OnChange,
-) => {
-  const field = document.createElement("textarea");
+const textarea = (name: string, val: string, parent: HTMLElement, onchange: OnChange) => {
+  const field = document.createElement('textarea');
   field.value = val;
 
-  field.addEventListener("input", () => onchange(name, field.value));
+  field.addEventListener('input', () => onchange(name, field.value));
   parent.appendChild(field);
 };
 
 const button = (name: string, parent: HTMLElement, onchange: OnChange) => {
-  const button = document.createElement("button");
+  const button = document.createElement('button');
   button.innerText = name;
-  button.addEventListener("click", (e: MouseEvent) => {
+  button.addEventListener('click', (e: MouseEvent) => {
     e.preventDefault();
-    onchange(name, "click");
+    onchange(name, 'click');
   });
   parent.appendChild(button);
 };
