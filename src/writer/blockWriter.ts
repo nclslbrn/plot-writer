@@ -50,8 +50,7 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
           else if (
             x + 4 > charsPerLine &&
             j < letters.length - 1 &&
-            (!isConsonant(l) ||
-            isConsonant(letters[j + 1]))
+            (!isConsonant(l) || isConsonant(letters[j + 1]))
           ) {
             grid[y].push(...[l as Char, '-' as Char]);
             y++;

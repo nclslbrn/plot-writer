@@ -29,7 +29,7 @@ const init = () => {
   app.appendChild(settingsPanel);
 
   const svgLogo = svg.cloneNode(true),
-    logoGlyphSize = [window.innerWidth / 100, 48],
+    logoGlyphSize = [window.innerWidth / 50, 48],
     logoText = `${name.replace('@nclslbrn/', '')}: ${version}`;
 
   ([...logoText] as Array<Char>).forEach((l: Char, x: number) => {
