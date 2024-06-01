@@ -1,26 +1,45 @@
-import { type Char, getGlyphPath, getParagraphPath } from '../../src/index.ts';
+import {
+  type Char,
+  Line,
+  Vec,
+  getGlyphPath,
+  getParagraphPath,
+  getParagraphVector,
+} from '../../src/index.ts';
 import { inputRange, textarea, button } from './field.ts';
 import { togglablePanel } from './panel.ts';
 import { name, version } from '../../package.json';
 import quotes from './quotes.ts';
+
+let settings;
 
 const app = document.getElementById('app'),
   header = document.createElement('header'),
   [settingsPanel, openSettingsPanel] = togglablePanel(false, '☰', '✖'),
   namespace = 'http://www.w3.org/2000/svg',
   svg = document.createElementNS(namespace, 'svg'),
-  settings = {
-    Text: quotes[Math.floor(Math.random() * quotes.length)],
-    'Letters per line': 30,
-    'Letter spacing': 1,
-    'Line spacing': 0.92,
+  pathFromD = (d: string): SVGPathElement => {
+    const path = document.createElementNS(namespace, 'path');
+    path.setAttribute('d', d);
+    return path;
   },
+  updateSetting = (propName: any, propValue: any) => {
+    settings[propName] = propValue;
+    localStorage.setItem(propName, String(propValue));
+    render();
+  },
+  getSetting = (propName: any): string =>
+    localStorage.getItem(propName) !== null ? <string>localStorage.getItem(propName) : '',
   group = document.createElementNS(namespace, 'g');
 
-const pathFromD = (d: string): SVGPathElement => {
-  const path = document.createElementNS(namespace, 'path');
-  path.setAttribute('d', d);
-  return path;
+settings = {
+  // These settings will be store in the local storage if user change them
+  Text: getSetting('Text') || quotes[Math.floor(Math.random() * quotes.length)],
+  'Letters per line':
+    getSetting('Letters per line') === '' ? 30 : parseInt(getSetting('Letters per line')),
+  'Letter spacing':
+    getSetting('Letter spacing') === '' ? 0.95 : parseFloat(getSetting('Letter spacing')),
+  'Line spacing': getSetting('Line spacing') === '' ? 0.92 : parseFloat(getSetting('Line spacing')),
 };
 
 const init = () => {
@@ -42,12 +61,12 @@ const init = () => {
   header.appendChild(svgLogo);
   header.appendChild(openSettingsPanel);
 
-  textarea('Text', settings.Text, settingsPanel, updateSettings);
+  textarea('Text', settings.Text, settingsPanel, updateSetting);
   inputRange(
     'Letters per line',
     settings['Letters per line'],
     settingsPanel,
-    updateSettings,
+    updateSetting,
     12,
     120,
     1
@@ -56,7 +75,7 @@ const init = () => {
     'Letter spacing',
     settings['Letter spacing'],
     settingsPanel,
-    updateSettings,
+    updateSetting,
     0.7,
     1.4,
     0.01
@@ -65,7 +84,7 @@ const init = () => {
     'Line spacing',
     settings['Line spacing'],
     settingsPanel,
-    updateSettings,
+    updateSetting,
     0.5,
     1.4,
     0.01
@@ -108,25 +127,35 @@ const render = () => {
     width = window.innerWidth - 40;
 
   group.textContent = '';
+  /** using getParagraphPath */
   const textBlock = getParagraphPath(userInput, settings['Letters per line'], 5, width, [
     settings['Letter spacing'],
     settings['Line spacing'],
   ]);
-  textBlock.paths.forEach((d: string) => {
-    const path = document.createElementNS(namespace, 'path');
-    path.setAttribute('d', d);
-    group.appendChild(path);
-  });
+  textBlock.paths.forEach((d: string) => group.appendChild(pathFromD(d)));
 
+  /* using getParagraphVector 
+  const textBlock = getParagraphVector(userInput, settings['Letters per line'], 5, width, [
+    settings['Letter spacing'],
+    settings['Line spacing'],
+  ]);
+  textBlock.vectors.forEach((g) =>
+    g.forEach((l: Line) => {
+      const path = document.createElementNS(namespace, 'path');
+      path.setAttribute(
+        'd',
+        l.reduce(
+          (com: string, v: Vec, i: number) =>
+            (com += `${i === 0 ? 'M' : 'L'}${v[0]},${v[1]}${i === l.length - 1 ? '' : ' '}`),
+          ''
+        )
+      );
+      group.appendChild(path);
+    })
+  );*/
   //group.setAttribute('stroke-width', width < 800 ? '0.5' : '2');
   svg.setAttribute('width', `${width}`);
   svg.setAttribute('height', `${textBlock.height + 40}`);
   svg.setAttribute('viewbox', `0 0 ${width} ${height + 40}`);
 };
-
-const updateSettings = (propName: any, propValue: any) => {
-  settings[propName] = propValue;
-  render();
-};
-
 init();

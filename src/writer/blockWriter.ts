@@ -22,16 +22,17 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
   const paragraphs: Array<string> = text.split(/\r?\n|\r|\n/g);
 
   for (let h = 0; h < paragraphs.length; h++) {
-    // Separate each word of the paragraph
+    // Split each word of the paragraph
     const words: Array<string> = paragraphs[h].split(' ');
     for (let i = 0; i < words.length; i++) {
+      // Split each letter of word
       const letters = words[i].split('') as Array<Char>,
         wordEnd = x + letters.length;
 
-      // word on multiple line (add hyphen)
-      if (wordEnd > charsPerLine) {
+      // Word cut (multiple line)
+      if (wordEnd >= charsPerLine) {
         for (let j = 0, l = letters[0]; j < letters.length; j++, l = letters[j]) {
-          // word close the line
+          // word ends at the end of the line
           if (x === charsPerLine - 1 && i === letters.length - 1) {
             grid[y].push(l);
             y++;
@@ -39,16 +40,17 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
             grid.push([]);
           }
           // the next letter is a punctuation mark
-          else if (x + 1 == charsPerLine && j < letters.length - 1 && isPuncChar(letters[j + 1])) {
+          else if (x + 2 > charsPerLine && j < letters.length - 1 && isPuncChar(letters[j + 1])) {
             grid[y].push(...[l, letters[j + 1]]);
             j++;
             y++;
             x = 0;
             grid.push([]);
           }
-          // end line (create new line)
+          // soft hyphenation between vowel and consonant (create new line)
+          // test it before applying hard hyphenation to word
           else if (
-            x + 4 > charsPerLine &&
+            x + hyphenFrom > charsPerLine &&
             j < letters.length - 1 &&
             (!isConsonant(l) || isConsonant(letters[j + 1]))
           ) {
@@ -57,14 +59,29 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
             x = 0;
             grid.push([]);
           }
-          // before the line end
-          else {
+          // hard hyphenation (no rules just prevent line larger than the limit)
+          else if (x + 1 > charsPerLine) {
+            grid[y].push(...[l as Char, '-' as Char]);
+            y++;
+            x = 0;
+            grid.push([]);
+          } else if (x + 1 < charsPerLine) {
+            /* before the line end */
             grid[y].push(l);
             if (j == letters.length - 1) {
               grid[y].push(' ' as Char);
               x++;
             }
             x++;
+          }
+          // put the entire word on the next line
+          else {
+            const erase = letters.length - j;
+            grid[y] = grid[y].splice(0, grid[y].length - erase);
+            y++;
+            grid[y] = [...[...letters, ' ' as Char]];
+            x = letters.length;
+            break;
           }
         }
       }
@@ -77,7 +94,7 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
         x = 0;
       }
       // word on same line and sufficient room (add space after word)
-      else if (wordEnd < charsPerLine - hyphenFrom) {
+      else if (wordEnd < charsPerLine) {
         grid[y].push(...[...letters, ' ' as Char]);
         x += letters.length + 1;
       }
@@ -106,19 +123,25 @@ const getParagraphVector = (
   text: string,
   charsPerLine: number,
   hyphenFrom: number,
-  textWidth: number
-): Glyph[] => {
+  textWidth: number,
+  spacing = [1, 1]
+): { vectors: Glyph[]; height: number } => {
   const grid = charArray(text, charsPerLine, hyphenFrom);
   const textSize = [textWidth / charsPerLine, (textWidth / charsPerLine) * 1.4];
-  return grid.reduce(
+  const invSpacing = [(1 / spacing[0]) * textSize[0], (1 / spacing[1]) * textSize[1]];
+  const vectors = grid.reduce(
     (out: Glyph[], row: Array<Char>, y: number) => [
       ...out,
       ...row.map((l: Char, x: number) =>
-        getGlyphVector(l, textSize, [x * textSize[0], y * textSize[1]])
+        getGlyphVector(l, invSpacing, [x * textSize[0], y * textSize[1]])
       ),
     ],
     []
   );
+  return {
+    vectors,
+    height: grid.length * textSize[1],
+  };
 };
 
 /**
@@ -157,6 +180,15 @@ const getParagraphPath = (
       ] as string[],
     [] as string[]
   );
+
+  /** debug charsPerLine
+   console.log(
+    `Line > ${charsPerLine}`, 
+    grid
+      .filter((lin) => lin.length > charsPerLine)
+      .map((len)=> grid.indexOf(len))
+  )
+  */
   return { paths, height: textSize[1] * grid.length };
 };
 

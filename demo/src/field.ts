@@ -2,7 +2,6 @@ export type OnChange = (name: string, val: boolean | string | number) => void;
 
 const trueFalseCheckbox = (name: string, val: boolean, parent: HTMLElement, onchange: OnChange) => {
   const fieldset = document.createElement('fieldset');
-
   const field = document.createElement('input');
   field.type = 'checkbox';
 
