@@ -5,8 +5,8 @@ import Stats from 'three/examples/jsm/libs/stats.module';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { type Vec, Line, getGlyphVector } from '@nclslbrn/plot-writer';
 
-const T = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ']; // An array of possible char used in the composition
-const d = 0.04;
+const T = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ']; // An array of possible char used in the composition
+const d = 0.025;
 const extruderPoints = [
   [-d, -d],
   [d, -d],
@@ -17,8 +17,7 @@ const extrudesShape = new THREE.Shape();
 extrudesShape.moveTo(...extruderPoints[0], 0);
 extruderPoints.forEach((pt) => extrudesShape.lineTo(...pt, 0));
 
-const glyphGeom = (size: number[]) => {
-  const letter = T[Math.ceil(Math.random() * T.length)];
+const glyphGeom = (letter: string, size: number[]) => {
   const glyph = getGlyphVector(letter, size, [-size[0] / 2, -size[1] / 2]);
   const closedSplines = glyph.map((l: Line) => {
     const unloop = l[0] === l[l.length - 1] ? l.slice(0, -1) : [...l];
@@ -45,15 +44,15 @@ class App {
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
-
   private lightAmbient!: THREE.AmbientLight;
   private lightPoint!: THREE.PointLight;
 
   private controls!: OrbitControls;
   private stats!: any;
 
-  //private cube!: THREE.Mesh;
-  private glyphs!: THREE.Mesh[];
+  private glyphMat!: THREE.MeshLambertMaterial;
+
+  private glyphs!: THREE.Group;
   private plane!: THREE.Mesh;
 
   constructor() {
@@ -67,16 +66,29 @@ class App {
     document.body.appendChild(this.stats.dom);
   }
 
+  createGlyph(letter: string, pos: number[], rx: number, ry: number) {
+    const glyphGeometry = glyphGeom(letter, [0.4, 1]);
+    glyphGeometry.map((geom: ExtrudeGeometry) => {
+      const m = new THREE.Mesh(geom, this.glyphMat);
+      m.position.x = pos[0];
+      m.position.y = pos[1];
+      m.position.z = pos[2] + 0.25;
+      m.rotation.y = ry;
+      m.rotation.x = rx;
+      m.castShadow = true;
+      m.receiveShadow = true;
+      this.scene.add(m);
+      this.glyphs.add(m);
+    });
+  }
+
   initScene() {
     this.scene = new THREE.Scene();
-
-    this.camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    this.camera.position.z = 3;
+    this.glyphMat = new THREE.MeshLambertMaterial({ color: 0xffffff });
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 20);
+    this.camera.position.y = -4;
+    this.camera.position.z = 2;
+    this.camera.lookAt(this.scene.position);
 
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.shadowMap.enabled = true;
@@ -87,16 +99,15 @@ class App {
     document.body.appendChild(this.renderer.domElement);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-
-    this.lightAmbient = new THREE.AmbientLight(0x666666);
+    this.lightAmbient = new THREE.AmbientLight(0x222222);
     this.scene.add(this.lightAmbient);
 
     // Add a point light to add shadows
     // https://github.com/mrdoob/three.js/pull/14087#issuecomment-431003830
-    const shadowIntensity = 0.5;
+    const shadowIntensity = 1;
 
     this.lightPoint = new THREE.PointLight(0xffffff);
-    this.lightPoint.position.set(-0.5, 0.5, 3);
+    this.lightPoint.position.set(0, 0, 3);
     this.lightPoint.castShadow = true;
     this.lightPoint.intensity = shadowIntensity;
     this.scene.add(this.lightPoint);
@@ -114,42 +125,39 @@ class App {
     this.lightPoint.shadow.camera.near = cameraNear;
     this.lightPoint.shadow.camera.far = cameraFar;
 
-    // Add a cube
-    /*
-     const geometryBox = new THREE.BoxGeometry();
-		const materialBox = new THREE.MeshPhongMaterial({ color: 0xFFFFFF });
-		this.cube = new THREE.Mesh(geometryBox, materialBox);
-		this.cube.castShadow = true;
-		this.scene.add(this.cube);
-    */
-    this.glyphs = [];
-    const glyphMat = new THREE.MeshLambertMaterial({ color: 0xffffff });
-    for (let y = -2; y <= 2; y += 0.5) {
-      for (let x = -2; x <= 2; x += 0.2) {
-        const glyphGeometry = glyphGeom([0.2, 1]);
-        glyphGeometry.map((geom: ExtrudeGeometry) => {
-          const m = new THREE.Mesh(geom, glyphMat);
-          //m.rotation.z = Math.PI / 4;
-          m.position.x = x;
-          m.position.y = y;
-          m.rotation.x = Math.PI;
-          m.castShadow = true;
-          this.scene.add(m);
-          this.glyphs.push(m);
-        });
+    this.glyphs = new THREE.Group();
+    for (let z = 0; z <= 2; z++) {
+      for (let y = -2; y <= 2; y++) {
+        for (let x = -2; x <= 2; x++) {
+          this.createGlyph(
+            T[Math.ceil(Math.random() * T.length)],
+            [x * 0.35, y * 0.5, z * 0.5],
+            -Math.PI / 2,
+            (x + z) % 2 === 0 ? Math.PI / 4 : -Math.PI / 4
+          );
+          this.createGlyph(
+            T[Math.ceil(Math.random() * T.length)],
+            [x * 0.35, y * 0.5, z * 0.5],
+            0,
+            0
+          );
+        }
       }
     }
+    this.glyphs.position.z = 0;
+    this.scene.add(this.glyphs);
+
     // Add a plane
     const geometryPlane = new THREE.PlaneGeometry(
-      window.innerWidth / 80,
-      window.innerHeight / 80,
+      window.innerWidth / 60,
+      window.innerHeight / 60,
       1,
       1
     );
     const materialPlane = new THREE.MeshPhongMaterial({ color: 0xcccccc });
 
     this.plane = new THREE.Mesh(geometryPlane, materialPlane);
-    this.plane.position.z = -1;
+    this.plane.position.z = 0;
     this.plane.receiveShadow = true;
     this.scene.add(this.plane);
 
@@ -159,25 +167,20 @@ class App {
 
   initListeners() {
     window.addEventListener('resize', this.onWindowResize.bind(this), false);
-
     window.addEventListener('keydown', (event) => {
       const { key } = event;
-
       switch (key) {
         case 'e':
           const win = window.open('', 'Canvas Image');
           const { domElement } = this.renderer;
-
           // Makse sure scene is rendered.
           this.renderer.render(this.scene, this.camera);
           const src = domElement.toDataURL();
-
           if (!win) return;
           win.document.write(
             `<img src='${src}' width='${domElement.width}' height='${domElement.height}'>`
           );
           break;
-
         default:
           break;
       }
@@ -194,9 +197,7 @@ class App {
     requestAnimationFrame(() => {
       this.animate();
     });
-
-    //this.cube.rotation.x += 0.01;
-    //this.cube.rotation.y += 0.01;
+    this.glyphs.rotation.z += 0.005;
 
     if (this.stats) this.stats.update();
     if (this.controls) this.controls.update();
