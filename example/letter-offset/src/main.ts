@@ -1,22 +1,21 @@
-import "./style.css";
-import { getGlyphVector } from "@nclslbrn/plot-writer";
-import { type Vec } from "@thi.ng/vectors";
-import { repeatedly, range } from "@thi.ng/transducers";
-import { polyline, rect, group, svgDoc, asSvg, Polyline } from "@thi.ng/geom";
-import { FMT_yyyyMMdd_HHmmss } from "@thi.ng/date";
-import { downloadCanvas, downloadWithMime } from "@thi.ng/dl-asset";
-import { asPolygons, asSDF, sample2d } from "@thi.ng/geom-sdf";
-import { draw } from "@thi.ng/hiccup-canvas";
-import { SYSTEM, pickRandom } from "@thi.ng/random";
-import { $compile } from "@thi.ng/rdom";
-import { button, canvas, div } from "@thi.ng/hiccup-html";
-import { clipPolylinePoly } from "@thi.ng/geom-clip-line";
+import './style.css';
+import { getGlyphVector } from '@nclslbrn/plot-writer';
+import { type Vec } from '@thi.ng/vectors';
+import { repeatedly, range } from '@thi.ng/transducers';
+import { polyline, rect, group, svgDoc, asSvg, Polyline } from '@thi.ng/geom';
+import { FMT_yyyyMMdd_HHmmss } from '@thi.ng/date';
+import { downloadCanvas, downloadWithMime } from '@thi.ng/dl-asset';
+import { asPolygons, asSDF, sample2d } from '@thi.ng/geom-sdf';
+import { draw } from '@thi.ng/hiccup-canvas';
+import { SYSTEM, pickRandom } from '@thi.ng/random';
+import { $compile } from '@thi.ng/rdom';
+import { button, canvas, div } from '@thi.ng/hiccup-html';
+import { clipPolylinePoly } from '@thi.ng/geom-clip-line';
+import { adaptDPI } from '@thi.ng/canvas';
 
 const RES = [256, 256], // A resolution to sample the letters composition
-  THEME = ["steelblue", "tomato", "LimeGreen", "gold", "indigo"],
-  T = [
-    ..."0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnpqrstuvwxyz.?,:!^=+/\\~#",
-  ]; // An array of possible char used in the composition
+  THEME = ['steelblue', 'tomato', 'LimeGreen', 'gold', 'indigo'],
+  T = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnpqrstuvwxyz.?,:!^=+/\\~#']; // An array of possible char used in the composition
 
 // We need these two elements:
 // `comp` to reuse the composition to export an SVG
@@ -27,12 +26,16 @@ let comp = group(),
 const init = () => {
   // A canvas will be added to the DOM before init() happens,
   // grab the element to draw the composition
-  cnvs = <HTMLCanvasElement>document.getElementById("main")!;
+  cnvs = <HTMLCanvasElement>document.getElementById('main')!;
   // Nothing fancy here we need a context to draw in the canvas
-  const ctx = cnvs!.getContext("2d"),
+  const ctx = cnvs!.getContext('2d'),
     // The dimension of the composition we need to remove 30 pixels of the
     // window height to get room for the two download buttons
-    frame = [window.innerWidth, window.innerHeight - 30],
+    preFrame = [window.innerWidth, window.innerHeight - 30],
+    // A scale factor (depends of the DPI of the device)
+    dpr = adaptDPI(cnvs, ...preFrame),
+    // The final dimension of our canvas (and SVG)
+    frame = preFrame.map((d) => d * dpr),
     // The diagonal will be use later to compute distance (with more flexibility)
     diag = Math.hypot(...frame),
     // A crop zone [[x, y], [width, height]
@@ -65,7 +68,7 @@ const init = () => {
         // Fonts are designed in square of 0->1, you can adapt the ratio here
         [size, size * 1.4],
         // You can also add a position [x, y] or move the points obtained later [0, 0].
-        pos.map((d) => d - size / 2),
+        pos.map((d) => d - size / 2)
       );
       // Since a letter can contains multiple lines and we want a flat array,
       // we use spread syntax and Array.reduce() to concatenate previous letter strokes with new ones
@@ -77,23 +80,17 @@ const init = () => {
     // https://github.com/thi-ng/umbrella/tree/develop/packages/geom-sdf
     sdf = asSDF(group({}, lines)),
     image = sample2d(sdf, rect(...crop), RES),
-    contours = asPolygons(
-      image,
-      rect(...crop),
-      RES,
-      range(diag * 0.003, diag, diag * 0.005),
-      0.5,
-    ),
+    contours = asPolygons(image, rect(...crop), RES, range(diag * 0.003, diag, diag * 0.005), 0.5),
     weight = diag * 0.0015;
   comp = group({}, [
-    group({}, [rect(frame, { fill: "#121010" })]),
-    group({ stroke: "#f3f6fa", weight }, contours),
+    group({}, [rect(frame, { fill: '#121010' })]),
+    group({ stroke: '#f3f6fa', weight }, contours),
     group(
       {
         // fix a discrepancy whose origin I do not know
         translate: [weight, weight],
-        lineJoin: "round",
-        lineCap: "round",
+        lineJoin: 'round',
+        lineCap: 'round',
         stroke: pickRandom(THEME),
         weight,
       },
@@ -104,20 +101,16 @@ const init = () => {
           // Usefull function from @thi.ng/geom-clip-line,
           // It removes all parts of line which are outside a polygon
           // https://github.com/thi-ng/umbrella/tree/7d3339310c56ac7fd3572fb3487b6f34f1de57ca/packages/geom-clip-line#api
-          ...clipPolylinePoly(l.points, cropPoly).map((pts) => polyline(pts)),
+          ...clipPolylinePoly(l.points, cropPoly).map((pts: Vec) => polyline(pts)),
         ],
-        [],
-      ),
+        []
+      )
     ),
   ]);
-
-  cnvs!.width = frame[0];
-  cnvs!.height = frame[1];
   draw(ctx!, comp);
 };
 
-const downloadJpg = () =>
-  downloadCanvas(cnvs, `letter-offset-${FMT_yyyyMMdd_HHmmss()}`, "jpeg", 1);
+const downloadJpg = () => downloadCanvas(cnvs, `letter-offset-${FMT_yyyyMMdd_HHmmss()}`, 'jpeg', 1);
 
 const downloadSvg = () =>
   downloadWithMime(
@@ -129,34 +122,34 @@ const downloadSvg = () =>
           height: window.innerHeight,
           viewBox: `0 0 ${window.innerWidth} ${window.innerHeight}`,
         },
-        comp,
-      ),
+        comp
+      )
     ),
-    { mime: "image/svg+xml" },
+    { mime: 'image/svg+xml' }
   );
 
 $compile(
   div(
     {},
-    canvas("#main"),
+    canvas('#main'),
     div(
       {},
       button(
         {
           onclick: downloadJpg,
-          title: "Download as JPG",
+          title: 'Download as JPG',
         },
-        "Donwload JPG",
+        'Donwload JPG'
       ),
       button(
         {
           onclick: downloadSvg,
-          title: "Download as SVG",
+          title: 'Download as SVG',
         },
-        "Donwload SVG",
-      ),
-    ),
-  ),
-).mount(document.getElementById("app")!);
+        'Donwload SVG'
+      )
+    )
+  )
+).mount(document.getElementById('app')!);
 
 init();

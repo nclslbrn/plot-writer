@@ -1460,6 +1460,7 @@ __metadata:
   resolution: "letter-offset@workspace:."
   dependencies:
     "@nclslbrn/plot-writer": "npm:^0.0.5-a"
+    "@thi.ng/canvas": "npm:^0.2.19"
     "@thi.ng/date": "npm:^2.7.18"
     "@thi.ng/dl-asset": "npm:^2.3.81"
     "@thi.ng/geom": "npm:^7.0.1"
