@@ -31,3 +31,14 @@ body {
   overflow: hidden;
 }
 
+#app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#app canvas {
+  max-width: 90%;
+  max-height: 90%;
+  height: auto;
+}

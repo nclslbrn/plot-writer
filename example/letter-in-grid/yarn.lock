@@ -335,7 +335,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/p5@npm:^1":
+"@types/p5@npm:^1.7.6":
   version: 1.7.6
   resolution: "@types/p5@npm:1.7.6"
   checksum: 10c0/92f53b7666a346a70c144fd72e09d06b9ef54a099098629717d0a70043d2ce96f1e3f49e6d36c7afa7f27ceaa4b833cca50d9d33878d201fce7105658ace0a6e
@@ -776,15 +776,15 @@ __metadata:
   linkType: hard
 
 "jackspeak@npm:^3.1.2":
-  version: 3.2.0
-  resolution: "jackspeak@npm:3.2.0"
+  version: 3.2.3
+  resolution: "jackspeak@npm:3.2.3"
   dependencies:
     "@isaacs/cliui": "npm:^8.0.2"
     "@pkgjs/parseargs": "npm:^0.11.0"
   dependenciesMeta:
     "@pkgjs/parseargs":
       optional: true
-  checksum: 10c0/42cf7f6c17c5543795c1102819a84469920271dbccb54dd8a396bdc52ffd5e9380230748732211b482942fd0f136c7d4449f8de50e4c8a6e567a7b7a809112e2
+  checksum: 10c0/eed7a5056ac8cdafcadeb1fedbfbe96aef4e7fea7cf6f536f48696df7ef4d423c323ba03320860b886ecf1e59d0478bb3d0f8ed7d464932c7e3c0712095425f1
   languageName: node
   linkType: hard
 
@@ -800,7 +800,7 @@ __metadata:
   resolution: "letter-in-grid@workspace:."
   dependencies:
     "@nclslbrn/plot-writer": "npm:^0.0.5-a"
-    "@types/p5": "npm:^1"
+    "@types/p5": "npm:^1.7.6"
     p5: "npm:^1.9.4"
     typescript: "npm:^5.2.2"
     vite: "npm:^5.2.0"
