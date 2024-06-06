@@ -13,26 +13,29 @@ const chars = [
   '__=-___==--_',
   '//  //  //  ',
   '° . ° . ° . ',
-  '/\\-|-|',
-  '////L__',
+  '////__',
+  '|------+-------',
   '#------',
-  '*-^-^-^-',
-  'L____n ',
-  'ʌ/V\\ʌ________',
-  '|___oxo___',
-  'x|___\\|/__|',
-  '|+--=--+',
+  'word...:...',
+  'devour;   ',
 ];
 
 const getSVG = () => {
   const data = new Blob(
     [
       `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n` +
-        `<svg width="${window.innerWidth}" height="${window.innerHeight}" viewbox="0 0 ${window.innerWidth} ${window.innerHeight}">\r\n\t` +
+        `<svg 
+          width="${window.innerWidth}" 
+          height="${window.innerHeight}" 
+          viewbox="0 0 ${window.innerWidth} ${window.innerHeight}"
+        >\r\n\t` +
         `<style> path { fill: none; stroke: #333; }</style>\r\n\t\t` +
         paths.reduce(
           (lines: string, line: Line) =>
-            `${lines}<path d="${line.reduce((d: string, v: Vec, i: number) => `${d}${i === 0 ? 'M' : 'L'}${v[0]},${v[1]} `, '')}"/>\r\n\t\t`,
+            `${lines}<path d="${line.reduce(
+              (d: string, v: Vec, i: number) => `${d}${i === 0 ? 'M' : 'L'}${v[0]},${v[1]} `,
+              ''
+            )}"/>\r\n\t\t`,
           ''
         ) +
         `\r\n\t</svg>`,
@@ -48,9 +51,8 @@ const getSVG = () => {
 
 const sketch = (p: p5) => {
   let cells = [[0, 0, 1, 1]],
-    sentencePrinted = false,
     absrctTxt = [...p.random(chars)];
-  const baseSize = [7, 10];
+  const baseSize = [12, 12];
   const debug = false;
 
   const expand = (d: number, i: number): number =>
@@ -83,23 +85,8 @@ const sketch = (p: p5) => {
     cells.push(...splitted);
   };
 
-  const noiseLine = (line: Line): Line => {
-    const noised = [] as Line;
-    for (let i = 0; i < line.length - 1; i++) {
-      const distance = Math.hypot(line[i + 1][0] - line[i][0], line[i + 1][1] - line[i][1]);
-      const angle = Math.atan2(line[i + 1][1] - line[i][1], line[i + 1][0] - line[i][0]);
-      for (let d = 0; d < distance; d++) {
-        const pos = [line[i][0] + Math.cos(angle) * d, line[i][1] + Math.sin(angle) * d];
-        const def = p.noise(...pos.map((v) => v * 0.007)) * Math.PI;
-        const strenght = (d / distance - 0.5) * 0.2 * distance;
-        noised.push([pos[0] + Math.cos(def) * strenght, pos[1] + Math.sin(def) * strenght]);
-      }
-    }
-    return noised;
-  };
-
   const fillCell = (cell: number[]): void => {
-    const scale = p.random([0.5, 1, 3]);
+    const scale = p.random([0.5, 1, 2]);
     const letterSize = baseSize.map((d) => d * scale);
     const [x, y, w, h] = cell.map((d, i) => expand(d, i));
     debug &&
@@ -110,18 +97,16 @@ const sketch = (p: p5) => {
         [x, y + h],
         [x, y],
       ] as Line);
-    let sample = p.random() > 0.66 ? absrctTxt : sentence;
-    //if (sample === sentence) sentencePrinted = true;
-    for (let ly = baseSize[1] * 2; ly < h - baseSize[1] * 2; ly += letterSize[1] * 2) {
-      for (let lx = baseSize[0] * 2; lx < w - baseSize[0] * 2; lx += letterSize[0] * 2) {
+    let sample = p.random() > 0.75 ? absrctTxt : sentence;
+    for (let ly = baseSize[1] * 2; ly < h - baseSize[1] * 2; ly += letterSize[1]) {
+      for (let lx = baseSize[0] * 2; lx < w - baseSize[0] * 2; lx += letterSize[0]) {
         const tIdx = readCursor % sample.length;
-        const dy = (p.noise(lx / w, ly) - 0.5) * baseSize[1] * 5;
 
         if (sample[tIdx] !== ' ') {
           const glyph = getGlyphVector(
             sample[tIdx],
-            letterSize.map((d) => d * 1.2),
-            [x + lx, y + ly + dy]
+            [letterSize[0] * 0.8, letterSize[1]],
+            [x + lx - letterSize[0] / 2, y + ly - letterSize[1] / 2]
           );
           glyph.forEach((line: Line) => paths.push(line));
         }
@@ -146,11 +131,11 @@ const sketch = (p: p5) => {
 
   p.setup = function () {
     p.createCanvas(window.innerWidth, window.innerHeight);
-    p.background('white');
+    p.background('#111');
     p.noFill();
-    p.stroke('#333');
-    p.strokeWeight(2);
-    for (let i = 0; i < 22; i++) {
+    p.stroke('#fefefe');
+    p.strokeWeight(1.4);
+    for (let i = 0; i < 36; i++) {
       splitCell();
     }
 
