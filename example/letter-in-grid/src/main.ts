@@ -24,11 +24,18 @@ const getSVG = (filename: string) => {
   const data = new Blob(
     [
       `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n` +
-        `<svg width="${window.innerWidth}" height="${window.innerHeight}" viewbox="0 0 ${window.innerWidth} ${window.innerHeight}">\r\n\t` +
+        `<svg 
+          width="${window.innerWidth}" 
+          height="${window.innerHeight}" 
+          viewbox="0 0 ${window.innerWidth} ${window.innerHeight}"
+        >\r\n\t` +
         `<style> path { fill: none; stroke: #333; }</style>\r\n\t\t` +
         paths.reduce(
           (lines: string, line: Line) =>
-            `${lines}<path d="${line.reduce((d: string, v: Vec, i: number) => `${d}${i === 0 ? 'M' : 'L'}${v[0]},${v[1]} `, '')}"/>\r\n\t\t`,
+            `${lines}<path d="${line.reduce(
+              (d: string, v: Vec, i: number) => `${d}${i === 0 ? 'M' : 'L'}${v[0]},${v[1]} `,
+              ''
+            )}"/>\r\n\t\t`,
           ''
         ) +
         `\r\n\t</svg>`,
@@ -81,10 +88,12 @@ const sketch = (p: p5) => {
     const scale = p.random([0.5, 1, 2]);
     const letterSize = baseSize.map((d) => d * scale);
     const [x, y, w, h] = cell.map((d, i) => expand(d, i));
+
     let sample = p.random() > 0.66 ? absrctTxt : sentence;
-    for (let ly = baseSize[1] * 2; ly < h - baseSize[1] * 2; ly += letterSize[1] * 2) {
-      for (let lx = baseSize[0] * 2; lx < w - baseSize[0] * 2; lx += letterSize[0] * 2) {
+    for (let ly = baseSize[1] * 2; ly < h - baseSize[1] * 2; ly += letterSize[1]) {
+      for (let lx = baseSize[0] * 2; lx < w - baseSize[0] * 2; lx += letterSize[0]) {
         const tIdx = readCursor % sample.length;
+
         if (sample[tIdx] !== ' ') {
           const glyph = getGlyphVector(
             sample[tIdx],
@@ -122,11 +131,11 @@ const sketch = (p: p5) => {
     readCursor = 0;
     cells = [[0, 0, 1, 1]];
 
-    p.background('white');
+    p.background('#fefefe');
     p.noFill();
-    p.stroke('#333');
-    p.strokeWeight(2);
-    for (let i = 0; i < 22; i++) {
+    p.stroke('#111');
+    p.strokeWeight(1.4);
+    for (let i = 0; i < 36; i++) {
       splitCell();
     }
 
