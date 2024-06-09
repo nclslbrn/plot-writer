@@ -13,18 +13,14 @@ const chars = [
   '__=-___==--_',
   '//  //  //  ',
   '° . ° . ° . ',
-  '/\\-|-|',
-  '////L__',
+  '////__',
+  '|------+-------',
   '#------',
-  '*-^-^-^-',
-  'L____n ',
-  'ʌ/V\\ʌ________',
-  '|___oxo___',
-  'x|___\\|/__|',
-  '|+--=--+',
+  'word...:...',
+  'devour;   ',
 ];
 
-const getSVG = () => {
+const getSVG = (filename: string) => {
   const data = new Blob(
     [
       `<?xml version="1.0" encoding="UTF-8" standalone="no"?>\r\n` +
@@ -42,16 +38,14 @@ const getSVG = () => {
 
   const link = document.createElement('a');
   link.href = window.URL.createObjectURL(data);
-  link.download = `letter-in-grid-${new Date().toISOString()}.svg`;
+  link.download = filename;
   link.click();
 };
 
 const sketch = (p: p5) => {
   let cells = [[0, 0, 1, 1]],
-    sentencePrinted = false,
     absrctTxt = [...p.random(chars)];
-  const baseSize = [7, 10];
-  const debug = false;
+  const baseSize = [12, 12];
 
   const expand = (d: number, i: number): number =>
     i % 2 === 0
@@ -83,45 +77,19 @@ const sketch = (p: p5) => {
     cells.push(...splitted);
   };
 
-  const noiseLine = (line: Line): Line => {
-    const noised = [] as Line;
-    for (let i = 0; i < line.length - 1; i++) {
-      const distance = Math.hypot(line[i + 1][0] - line[i][0], line[i + 1][1] - line[i][1]);
-      const angle = Math.atan2(line[i + 1][1] - line[i][1], line[i + 1][0] - line[i][0]);
-      for (let d = 0; d < distance; d++) {
-        const pos = [line[i][0] + Math.cos(angle) * d, line[i][1] + Math.sin(angle) * d];
-        const def = p.noise(...pos.map((v) => v * 0.007)) * Math.PI;
-        const strenght = (d / distance - 0.5) * 0.2 * distance;
-        noised.push([pos[0] + Math.cos(def) * strenght, pos[1] + Math.sin(def) * strenght]);
-      }
-    }
-    return noised;
-  };
-
   const fillCell = (cell: number[]): void => {
-    const scale = p.random([0.5, 1, 3]);
+    const scale = p.random([0.5, 1, 2]);
     const letterSize = baseSize.map((d) => d * scale);
     const [x, y, w, h] = cell.map((d, i) => expand(d, i));
-    debug &&
-      paths.push([
-        [x, y],
-        [x + w, y],
-        [x + w, y + h],
-        [x, y + h],
-        [x, y],
-      ] as Line);
     let sample = p.random() > 0.66 ? absrctTxt : sentence;
-    //if (sample === sentence) sentencePrinted = true;
     for (let ly = baseSize[1] * 2; ly < h - baseSize[1] * 2; ly += letterSize[1] * 2) {
       for (let lx = baseSize[0] * 2; lx < w - baseSize[0] * 2; lx += letterSize[0] * 2) {
         const tIdx = readCursor % sample.length;
-        const dy = (p.noise(lx / w, ly) - 0.5) * baseSize[1] * 5;
-
         if (sample[tIdx] !== ' ') {
           const glyph = getGlyphVector(
             sample[tIdx],
-            letterSize.map((d) => d * 1.2),
-            [x + lx, y + ly + dy]
+            [letterSize[0] * 0.8, letterSize[1]],
+            [x + lx - letterSize[0] / 2, y + ly - letterSize[1] / 2]
           );
           glyph.forEach((line: Line) => paths.push(line));
         }
@@ -146,6 +114,14 @@ const sketch = (p: p5) => {
 
   p.setup = function () {
     p.createCanvas(window.innerWidth, window.innerHeight);
+    init();
+  };
+  const init = () => {
+    absrctTxt = [...p.random(chars)];
+    paths = [];
+    readCursor = 0;
+    cells = [[0, 0, 1, 1]];
+
     p.background('white');
     p.noFill();
     p.stroke('#333');
@@ -164,7 +140,8 @@ const sketch = (p: p5) => {
   };
 
   p.keyPressed = function (e: KeyboardEvent) {
-    if (e.key === 'd') getSVG();
+    if (e.key === 'r') init();
+    if (e.key === 'd') getSVG(`letter-in-grid-${new Date().toISOString()}.svg`);
     if (e.key === 'p') p.saveCanvas(`letter-in-grid-${new Date().toISOString()}`, 'jpg');
   };
 };
