@@ -1,6 +1,7 @@
 # Plot-writer
 
-A SVG text writer for plotter.
+![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fnclslbrn%2Fplot-writer%2Fmain%2Fpackage.json&query=version&prefix=ver.&style=flat-square&logo=npm&logoSize=200&label=plot-writer&labelColor=red&color=slategray&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2F%40nclslbrn%2Fplot-writer)
+ A SVG text writer for plotter.
 This library allows you to obtain an SVG plot from text, each glyph drawn with simple lines (no outlines).
 
 ![a plot made with PlotWriter](https://raw.githubusercontent.com/nclslbrn/plot-writer/main/plotwriter.jpg)
