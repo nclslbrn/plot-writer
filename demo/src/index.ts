@@ -1,17 +1,20 @@
 import {
   type Char,
-  Line,
-  Vec,
   getGlyphPath,
   getParagraphPath,
-  getParagraphVector,
+  // getParagraphVector,
 } from '../../src/index.ts';
 import { inputRange, textarea, button } from './field.ts';
 import { togglablePanel } from './panel.ts';
 import { name, version } from '../../package.json';
 import quotes from './quotes.ts';
 
-let settings;
+let settings = {
+  'Text': '',
+  'Letters per line': 0,
+  'Letter spacing': 0,
+  'Line spacing': 0
+}
 
 const app = document.getElementById('app'),
   header = document.createElement('header'),
