@@ -117,6 +117,7 @@ const charArray = (text: string, charsPerLine: number, hyphenFrom: number): Arra
  * @param number hyphenFrom cut and hyphenate threshold,
  * how many chars after line return, greater value reduce hyphenation
  * @param number textWidth the size in pixels of the line
+ * @param array spacing [{letter spacing}, {line spacing}]
  * @returns Glyph[] an array of vector [Glyph[Line[Vec[x,y]]]]
  */
 const getParagraphVector = (
@@ -152,6 +153,7 @@ const getParagraphVector = (
  * @param number charsPerLine max number of chars on a line
  * @param number hyphenFrom cut and hyphenate threshold (how many chars after line return)
  * @param number textWidth the size in pixels of the line
+ * @param array spacing [{letter spacing}, {line spacing}]
  * @returns string[] an array of <path> d attribute
  */
 const getParagraphPath = (

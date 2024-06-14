@@ -1,6 +1,6 @@
 {
   "name": "@nclslbrn/plot-writer",
-  "version": "0.0.5-a",
+  "version": "0.1.0",
   "type": "module",
   "main": "./dist/plot-writer",
   "types": "./dist/plot-writer",
