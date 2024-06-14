@@ -1,16 +1,18 @@
 {
-	"compilerOptions": {
+  "types": ["vite", "vitest"],
+  "compilerOptions": {
 		"target": "esnext",
 		"useDefineForClassFields": true,
 		"module": "ESNext",
 		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
     "declaration": true,
+    "esModuleInterop": true,
 		/* Bundler mode */
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
 		"resolveJsonModule": true,
-		"isolatedModules": true,
+		"isolatedModules": false,
 		"noEmit": true,
 
 		/* Linting */
@@ -19,6 +21,6 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true
 	},
-  "include": ["./src", "index.d.ts", "type.d.ts"],
-	"exclude": ["__tests__/index.ts"]
+  "include": ["src"],
+	/* "exclude": ["__tests__/index.ts"] */
 }
