@@ -1,22 +1,23 @@
-name: Test 
-
+name: "Run vitest tests"
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ['main']
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
         with:
-          node-version: latest
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm install
-      - name: Test (Vitest)
-        run: npm test
+          node-version: 18
+
+      - name: Run `npm install`
+        run: |
+          npm install
+          npm run build
+
+      - name: Run vitest and report issues
+        uses: roerohan/vitest-github-action@v1
