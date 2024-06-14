@@ -25,7 +25,7 @@
     "deploy": "npm publish",
     "demo:dev": "vite demo/ --host",
     "demo:build": "tsc && vite build demo/",
-    "dependencies": "yarn dlx @yarnpkg/sdks base"
+    "neovimLSP": "yarn dlx @yarnpkg/sdks base"
   },
   "description": "Write (SVG) text with JavaScript",
   "keywords": [
