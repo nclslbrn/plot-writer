@@ -4,7 +4,8 @@ import uppercase from './uppercase/index';
 import punctuation from './punctuation';
 import number from './number';
 import currency from './currency';
-
+import boxDrawings from './box-drawings'; 
+import arrowSymbols from './arrow-symbols';
 /*
  * Destructure every glyphs groups to compose the font
  * To go deeper on this font sructure please refer to
@@ -16,6 +17,8 @@ const font = {
   ...number,
   ...punctuation,
   ...currency,
+  ...boxDrawings,
+  ...arrowSymbols
 } as Font;
 
 export { font };

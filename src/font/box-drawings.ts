@@ -2,7 +2,7 @@ import { type Font } from '../type';
 
 /**
  * An object of UTF-8 bow drawings
- * @link {https://www.w3schools.com/charsets/ref_utf_box.asp}
+ *@link {https://www.w3schools.com/charsets/ref_utf_box.asp}
  *
  * Only light drawings here: ─ │ ┌ ┐ └ ┘ ├ ┤ ┬ ┴ ┼ ╌ ╎
  */
